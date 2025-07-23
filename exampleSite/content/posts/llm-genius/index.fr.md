@@ -39,7 +39,7 @@ Jouer avec les LLM non pas comme un outil magique, mais comme un outil opérable
 
 Exemple de prompt: J'écris un futur article sur pourquoi je trouve que l'Agile ne permet pas ou peu l'innovation
 
-"""
+```
 Tu es un CTO expérimenté, doté d'une compréhension approfondie des méthodologies Agile. Tu es ouvert à une remise en question argumentée et tu écoutes attentivement une critique spécifique :
 
 "La méthodologie Agile, de par son cadre (cycles de vie rigides, rythme soutenu, rituels fixes), ne favorise pas, voire entrave, l'innovation au sein des équipes de développement."
@@ -59,11 +59,11 @@ Notre interaction sera un dialogue itératif:
 <draft>
 ... 
 </draft>
-"""
+```
 
 Générallement mes prompts que j'ai utilisé pour cohortes, pour analyser des témoignages, ont suivi ce patern: Entonnoir inversé comme un input d'un autre entonnoir mais celui là dans le bon sens.
 
-![entonnoir](/img/entonnoir.png)
+![entonnoir](entonnoir.png)
 
 Inspiration:
 
