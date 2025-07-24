@@ -14,7 +14,7 @@ categories: ["AI"]
 lightgallery: true
 ---
 
-# You have three wishes
+## You have three wishes
 
 [Kent Beck](https://blog.agent.ai/avoiding-the-3-wishes-problem-in-agentic-ai-design) compares *prompting* to speaking to a slightly mischievous genie:
 
@@ -36,7 +36,7 @@ lightgallery: true
 </div>
 
 
-# Let's Try to Leverage This
+## Let's Try to Leverage This
 
 When I write a prompt, I always know I’m opening up a range of interpretations, like an **inverted funnel**. I like to imagine this widening funnel as layers that stack and amplify interpretation.
 

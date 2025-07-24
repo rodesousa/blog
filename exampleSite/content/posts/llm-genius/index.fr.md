@@ -14,7 +14,7 @@ categories: ["AI"]
 lightgallery: true
 ---
 
-# Tu as droit à trois vœux
+## Tu as droit à trois vœux
 
 [Kent Beck](https://blog.agent.ai/avoiding-the-3-wishes-problem-in-agentic-ai-design) compare le *prompting* comme si on parlait à un génie un peu malicieux:
 
@@ -33,7 +33,7 @@ lightgallery: true
   <img src="genius.png" alt="Genius">
 </div>
 
-# Essayons de profiter de ça
+## Essayons de profiter de ça
 
 Quand je formule un prompt je sais toujours que j'ouvre un éventail d'interprétations possibles, comme un **entonnoir inversé**. Et j'aime bien imaginer l'élargissement de l'entonnoir comme des couches qui se superposent et qui permettent d'amplifier l'interprétation. 
 
