@@ -31,15 +31,18 @@ lightgallery: true
 > won’t admit when it doesn’t “know” something
 
 <div style="display: flex; justify-content: center;">
-  <img src="genius.png" alt="Genius">
+
+![](genius.png)
 </div>
+
 
 # Let's Try to Leverage This
 
 When I write a prompt, I always know I’m opening up a range of interpretations, like an **inverted funnel**. I like to imagine this widening funnel as layers that stack and amplify interpretation.
 
 <div style="display: flex; justify-content: center;">
-  <img src="entonnoir.png" alt="Entonnoir">
+
+![](entonnoir.png)
 </div>
 
 A good prompt looks like this:
@@ -84,7 +87,8 @@ Our interaction will be an iterative dialogue:
 I often use the "two funnels": the inverted one as input for another funnel.
 
 <div style="display: flex; justify-content: center;">
-  <img src="reverse-entonnoir.png" alt="Entonnoir inverse">
+
+![](reverse-entonnoir.png)
 </div>
 
 Links:
