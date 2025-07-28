@@ -99,25 +99,24 @@ Développement d’une plateforme *Kubernetes as the service*
 + Transition interne Helm → Kustomize pour une gestion infra plus robuste
 + Management d’une équipe technique de 7 personnes
 
-**Juil 2016 à Janvier 2019 - Consultant Kubernetes**(Ritmx, Paris)
+**Juil 2016 à Janvier 2019 - SRE **(Ritmx, Paris)
 
-Consultant DevOps à l'interieur de l'équipe infra puis,
-consultant Kubernetes à l'intérieur d'une équipe SRE,
-consultant Kubernetes à l'intérieur d'une feature team
+SRE au sein des équipes infra des applications de distribution billetique en Île-de-France
 
-+ Formation donnée: Git, Kubernetes pour Dev, Ansible, Docker
-+ Migration script sh vers du on premise Puppet/Ansible puis vers Terraform/GCP/k8s/Helm
-+ Migration Nagios vers Prometheus avec Thanos en storage
-+ Controller K8s Custom sous Elixir
-+ Lead sur la gestion des logs (Fluent/Kibana)
-+ Lead sur la CI/CD
-+ Travail de recherche et d'écriture sur une critique des mangagements Agile avec Vincent Cornet
++ Migration infra:
+  - script sh legacy vers ansible on-premise vers Terraform/GCP/Kubernetes/Helm
+  - Lead CI/CD et gestion des logs: Fluent/Prometheus/Thanos
+  - Développement de controllers Kubernetes personnalisés en Elixir
++ Formation interne : Git, Kubernetes, Ansible, Docker
++ Recherche et publication sur une critique des méthodes Agile
 
 **Mars 2016 à Juil 2016 - Développeur Scala** (Keljob.com)
 
-+ Développement Scala/Play2
-+ Création de visualisations et dashboards anti-crawl avec ES/Kibana3
-+ Lead sur la mise d'environnement de dev sous docker
+Application de jobboard
+
++ Développement d’applications Scala avec Play2
++ Création de dashboards anti-crawl avec Elasticsearch et Kibana3
++ Lead sur la mise en place d’environnements de développement Docker
 
 **Avr 2015 à Mars 2016 - Consultant DevOps && Bigdata** (Banque de France, Paris)
 
@@ -161,13 +160,3 @@ Formation
 
 2007-2011: *Licence Informatique - Université Denis Diderot (Paris VII)*
 
-Projet pro
----------
-
-- De 2019 - 2021, étude et écriture d'article de critique des managements IT (principalement l'Agile). Comment peut-on mettre des pratiques libertaire dans le management IT sous fond de [shape up](https://basecamp.com/shapeup).
-
-- Depuis fin 2022, rédaction [en cours] d'une synthèse sur mon travail de critique des mangements IT.
-
-----
-
-> dessroberto at gmail com
