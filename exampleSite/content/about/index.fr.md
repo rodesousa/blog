@@ -50,52 +50,54 @@ Une solution de récolte et d'analyse AI de témoignage de salarié en texte lib
   - A/B testing, amélioration des taux de réponse de x2
 + Utilisé le vibe coding pour développer rapidement des MVP dédiés aux démos clients, augmentant la conversion prospects → clients
 + Stack full Elixir (Phoenix, LiveView): développement d’un SaaS
-  - Postgres pour la gestion des utilisateurs et des témoignages.
+  - Postgres pour la gestion des utilisateurs et des témoignages
   - Typesense pour recherche sémantique via embeddings, intégré à un système RAG pour des réponses contextuelles et enrichies.
   - Orchestration d’agents AI via Oban pour l’analyse automatisée via LLM self-hosted & cloud
 + Donnée quelques formations à l’IA générative : prompting, vibe coding, agents
 
 **Février 2022 à Novembre 2023 - Lead Dev Elixir, Front/Back** (Sapiologie)
 
-Création d'un ERP spécialisé dans le calcul de l'empreinte écologique et social à destination TPE/PME
+Création d'un ERP spécialisé dans le calcul de l'empreinte écologique (ACV) et social à destination TPE/PME
 
-+ Front: Phoenix Liveview (elixir), Tailwind, Typescript
-+ Back: Phoenix (elixir)
-+ Implémentation d'une base graph [datomic](https://www.datomic.com/) en elixir sur postgres
-+ Management: Mise en place de [shape up](https://basecamp.com/shapeup)
++ Stack full Elixir (Phoenix, LiveView): développement de l'ERP
+  - Postgres pour la gestion des utilisateurs et des données
+  - Implémentation d’une base Datomic-like sous Postgres, pour un historique temps réel des modifications et gestion de revert
+  - Réduction du calcul de l'ACV de 90%
++ Mise en place de Shape Up : organisation du travail par cycles projets, meilleure priorisation et d'engagement
++ Encadrement technique, choix d’architecture, gestion de l'infra
 
-**Juin 2021 à Février 2022 - DevOps / Senior Dev** (Arkhn)
+**Juin 2021 à Février 2022 - Tech lead infra** (Arkhn)
 
-+ Infra: Refactor du déploiement sur du on-premise & cloud: Ansible, Packer, Scaleway
-+ Gros travail d'optimisation Postgres (indexage, import, export, volumétrie en milliard de ligne)
-+ Evangélisation sur: TDD, CI/CD, versionning 
+Rendre la donnée hospitalière intéropérable
 
-**Mai 2020 à Juin 2021 - Head of tech, Lead Dev** (Jobia, freelance)
++ Refactor des déploiements sur environnements cloisonnés et cloud (ansible/nomad, scaleway, déploiement à l'hopital)
++ Mise en place et diffusion des bonnes pratiques : TDD, CI/CD
++ Organisation de game days sur les processus de déploiement pour améliorer la résilience et former les équipes.
++ Optimisation Postgres dans le cadre de la création des datalake : migration de bases volumineuses (1 ~ 10 To)
+    - Utilisation de DBT (CTE) pour structurer les migrations
+    - Plusieurs stratégies d'indexage (notamment BRIN)
+    - Réduction du temps de traitement des migrations de ~70 %
 
-Divers missions très courte en freelance chez Jobia et d'autres missions en freelance en consultant lead
+**Mai 2019 à Octobre 2020 - Développeur Senior Elixir** (Pandascore)
 
-+ Front: Phoenix Liveview (elixir), Tailwind, Typescript
-+ Back: API sous Phoenix
-+ Management: Mise en place de [shape up](https://basecamp.com/shapeup)
-+ Formations données sur postgreSQL, kubernetes, ci/cd, git, elixir
+Provider de data/metadata de jeu de scène esport
 
-**Mai 2019 à Mai 2020 - Développeur Senior Elixir** (Pandascore)
-
-Au sein de l'équipe qui s'occupe de tous les logiciels autour de l'API Pandascore
-
-+ Back: API avec Phoenix, LiveView, Cowboy, ETL
-+ Formation donnée: Kubernetes, Git
-+ Infra: Migration de Helm vers Kustomize
-+ Lead CI/CD, bonne pratique Kubernetes
++ Lead technique sur l’API (Elixir/Phoenix/Cowboy/ETL) 
+  - Développement de fonctionnalités
++ Pont entre les équipes dev, machine learning et infra 
+  - Standardisation des data contract entre équipes ML / Backend / API pour gagner en synchros et faciliter les migrations
+  - Migration de Helm vers Kustomize pour gagner maintenabilité
+  - Formation internes sur Kubernetes, CI/CD
 
 **Fév 2019 à Mai 2019 - Kubernetes Consultant / Golang Dev**(Thalès Digital Factory, Paris)
 
-Au sein d'une équipe SRE pour développer une plateforme de K8s à la demande
+Développement d’une plateforme *Kubernetes as the service*
 
-+ Mise en place d'une distrib k8s sous rancher
-+ Dev de controller/operator en golang/elixir
-+ Transition interne Helm -> Kustomize
-+ Management d’équipe de 7 personnes
++ Conception et déploiement d’une distribution Kubernetes custom sous Rancher
++ Développement de controllers/operators Kubernetes en Golang et Elixir
++ Collaboration directe avec l’équipe Rancher pour optimiser l’intégration
++ Transition interne Helm → Kustomize pour une gestion infra plus robuste
++ Management d’une équipe technique de 7 personnes
 
 **Juil 2016 à Janvier 2019 - Consultant Kubernetes**(Ritmx, Paris)
 
