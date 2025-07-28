@@ -7,7 +7,9 @@ draft: false
 author: "Roberto"
 description: "Mon problème avec les processus de recrutement de type livecoding ou TP à la maison"
 images: []
-resources: []
+resources:
+- name: "featured-image"
+  src: "featured-image.png"
 tags: ["recrutement", "organination", "management"]
 categories: ["recrutement", "organination", "management"]
 

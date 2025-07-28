@@ -7,7 +7,9 @@ draft: false
 author: "Roberto"
 description: "Comment les outils d’organisation du travail inscrivent la subordination des conditions de travail à la performance ?"
 images: []
-resources: []
+resources:
+- name: "featured-image"
+  src: "featured-image.png"
 tags: ["management", "organisation", "QVCT"]
 categories: ["management", "organisation", "QVCT"]
 

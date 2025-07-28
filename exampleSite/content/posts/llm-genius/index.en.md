@@ -7,7 +7,9 @@ draft: false
 author: "Roberto"
 description: "LLM is a genius — Be careful what you wish for"
 images: []
-resources: []
+resources:
+- name: "featured-image"
+  src: "featured-image.jpg"
 tags: ["LLM", "AI"]
 categories: ["AI"]
 
