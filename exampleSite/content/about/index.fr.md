@@ -47,7 +47,7 @@ Une solution de récolte et d'analyse AI de témoignage de salarié en texte lib
 
 + Dirigé la récolte des besoins, défini la roadmap technique, prospection, pitch, développement de partenariat
 + Réduit de 90 % le temps d’analyse manuelle, donnant plus de temps à l’interprétation des témoignages
-  - A/B testing, amélioration des taux de réponse de x2,3 en 3 mois
+  - A/B testing, amélioration des taux de réponse de x2
 + Utilisé le vibe coding pour développer rapidement des MVP dédiés aux démos clients, augmentant la conversion prospects → clients
 + Stack full Elixir (Phoenix, LiveView): développement d’un SaaS
   - Postgres pour la gestion des utilisateurs et des témoignages.

@@ -10,8 +10,8 @@ images: []
 resources:
 - name: "featured-image"
   src: "featured-image.png"
-tags: ["recrutement", "organination", "management"]
-categories: ["recrutement", "organination", "management"]
+tags: ["recrutement", "organisation", "management"]
+categories: ["recrutement", "organisation", "management"]
 
 lightgallery: true
 ---
