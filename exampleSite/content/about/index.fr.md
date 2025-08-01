@@ -35,7 +35,7 @@ En ce moment je recherche une nouvelle boîte, en CDI, en tant que CTO early sta
 
 - 🙅‍♂️ Les secteurs de la finance, assurance, banque ne m'interresse pas
 - 🔥 ESS, SCOP gros plus :)
-- 👎 Le process de livecoding c'est **non**, process de *system design* **oui**: <a href="/recrutement/">Est-ce qu’on mesure vraiment la compétence technique avec une épreuve de livecoding ?</a>
+- 👎 Le process de livecoding ne mesure pas la compétence technique: <a href="/recrutement/">Est-ce qu’on mesure vraiment la compétence technique avec une épreuve de livecoding ?</a>
 
 **dessroberto [at] gmail [dot] com**
 
