@@ -167,3 +167,4 @@ Ce qui est structurant dans une équipe, ce sont les méthodes de travail. Publi
 
 **Voici comment on bosse. Si ça t’inspire, viens.**
 
+Edit 1: Pas le seul, [Live coding sucks](https://hadid.dev/posts/living-coding/)
