@@ -136,7 +136,7 @@ C'est pour ça que je pense que l'équipe doit participer à définir le process
 
 ### Le processus de développement comme une vitrine de l'équipe
 
-Je pense que le recrutement doit montrer comment la future équipe du candidat s'organise / a envie de s'organiser. Un peucomme une vitrine de librairie qui expose les derniers livres disponibles ou la dernière dédicace de prévu.
+Je pense que **le recrutement doit montrer comment la future équipe du candidat s'organise / a envie de s'organiser**. Un peu comme une vitrine de librairie qui expose les derniers livres disponibles ou la dernière dédicace de prévu.
 
 Saša Jurić dans une suite d'article dans [Towards Maintainable Elixir](https://medium.com/@sasa.juric) parle de la nécessité de construire un processus de développement. Quelles sont les méthodes de travail qu'on a envie d'avoir ?
 
