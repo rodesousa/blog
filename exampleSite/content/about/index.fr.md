@@ -117,7 +117,7 @@ Développement d’une plateforme *Kubernetes as the service* pour des services 
 + Transition interne Helm → Kustomize pour une gestion infra plus robuste
 + Management d’une équipe technique de 7 personnes
 
-**Juil 2016 à Janvier 2019 - SRE **(Ritmx, Paris)
+**Juil 2016 à Janvier 2019 - SRE** (Ritmx, Paris)
 
 SRE au sein des équipes infra des applications de distribution billetique en Île-de-France
 
