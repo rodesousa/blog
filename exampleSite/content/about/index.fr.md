@@ -11,13 +11,13 @@ math:
   enable: true
 ---
 
-**Je suis Roberto De Sousa, je suis devéloppeur, + de 10 ans d'expérience.** J'ai navigué entre des postes de dev (back/front), de SRE/devops/archi jusqu'à lead/CTO. Très, très grand fan des langages de programation fonctionnel et surtout de la stack elixir **mais fermé à aucun langage** *but i'm afraid by rust*.
+**Je suis Roberto De Sousa, je suis développeur, + de 10 ans d'expérience.** J'ai navigué entre des postes de dev (back/front), de SRE/devops/archi jusqu'à lead/CTO. Très, très grand fan des langages de programmation fonctionnel et surtout de la stack elixir **mais fermé à aucun langage** *but i'm afraid by rust*.
 
-J'ai réalisé en 2019, que le management Agile n'était pas du tout ce qu'il prétendait être. J'ai accompagné [Vincent Cornet](https://www.linkedin.com/in/vincent-cornet-030ab387/) dans un mémoire sur une critique de l'Agile qui m'a interessé à la sociologie du travail et puis à d'autres types d'organisations. J'ai écrit des articles et pu mettre en place des alternatives comme [shape up](https://basecamp.com/shapeup/shape-up.pdf), [game day](https://medium.com/paris-chaos-engineering-community/un-gameday-dans-ma-team-un-besoin-de-transmettre-du-savoir-faire-42682477943e), et pleins d'autres choses.
+J'ai réalisé en 2019, que le management Agile n'était pas du tout ce qu'il prétendait être. J'ai accompagné [Vincent Cornet](https://www.linkedin.com/in/vincent-cornet-030ab387/) dans un mémoire sur une critique de l'Agile qui m'a intéressé à la sociologie du travail et puis à d'autres types d'organisations. J'ai écrit des articles et pu mettre en place des alternatives comme [shape up](https://basecamp.com/shapeup/shape-up.pdf), [game day](https://medium.com/paris-chaos-engineering-community/un-gameday-dans-ma-team-un-besoin-de-transmettre-du-savoir-faire-42682477943e), et pleins d'autres choses.
 
 Depuis 2023 je me suis lancé dans l'entreprenariat, j'ai cofondé [cohortes](https://www.cohortes.co/), une solution de récolte et d'analyse AI de témoignage de salarié en texte libre pour aider les acteurs de l'amélioration des conditions de travail. J'ai la chance de faire partie de [l'Agora DODES](https://agora-dodes.fr/) et d'être proche des mouvements de [l'ESS](https://www.ess-france.org/) de la [QVCT](https://www.anact.fr/qualite-de-vie-et-des-conditions-de-travail)
 
-En ce moment je recherche une nouvelle boîte, en CDI, en tant que CTO early stage ou < 50 personnes, head of engineering, ou un poste de lead dev à forte valeur tech **with AI**. Faire profiter de ma double casquette, stratégique et technique.
+En ce moment je recherche une nouvelle aventure, en CDI, en tant que CTO early stage ou < 50 personnes, head of engineering, ou un poste de lead dev à forte valeur tech **with AI**. Faire profiter de ma double casquette, stratégique et technique.
 
 💡 **Ce qui m’anime : poser une culture tech saine et très ambitieuse.**
 - 🙅‍♂️ Pas de culture du rush.
@@ -33,7 +33,7 @@ En ce moment je recherche une nouvelle boîte, en CDI, en tant que CTO early sta
 
 **Important**
 
-- 🙅‍♂️ Les secteurs de la finance, assurance, banque ne m'interresse pas
+- 🙅‍♂️ Les secteurs de la finance, assurance, banque ne m'intéresse pas
 - 🔥 ESS, SCOP gros plus :)
 - 👎 <a href="/recrutement/">Le live coding est-il vraiment une méthode pertinente dans le processus de recrutement ?</a>
 
@@ -84,7 +84,7 @@ ERP ACV & impact social à destination des TPE/PME
 
 **Juin 2021 à Février 2022 - Tech lead infra** (Arkhn)
 
-Rendre la donnée hospitalière intéropérable
+Rendre la donnée hospitalière interopérable
 
 + Pilotage de la modernisation des infrastructures
   - Déploiement et gestion d'infra à l'intérieur des hospitaux (4 hôpitaux, ~ 100 To de data, ~20 services)
