@@ -95,7 +95,10 @@ Les fichiers que j'utilise le plus de mon *stdlib*, c'est:
 - *prototype summary*
 - rules.mdc, [le format de régle de cursor](https://docs.cursor.com/en/context/rules)
 
-Pour le prd et le spec, il y a beaucoup d'article sur le sujet. Je trouve que Geoffrey est toujours une source sur [From Design doc to code: the Groundhog AI coding assistant](https://ghuntley.com/specs/). Par contre, un retour qu'on s'est fait avec [Sven](https://www.linkedin.com/in/sven-rodriguez/), c'est que le prd et la spec deviennent très très vite obsolète et que ça devient vite un poids à mettre à jour. A chaque grosse modification, je préfère réécrire le prd et le spec.
+Pour le prd et le spec, il y a beaucoup d'article sur le sujet. Je trouve que Geoffrey est toujours une source sur [From Design doc to code: the Groundhog AI coding assistant](https://ghuntley.com/specs/). Par contre, deux retours
+
+- Avec [Sven](https://www.linkedin.com/in/sven-rodriguez/), on s'est dit que le prd et la spec deviennent très très vite obsolète et que ça devient vite un poids à mettre à jour. A chaque grosse modification, je préfère réécrire le prd et le spec.
+- Pour faire un bon prd/spec, je commence souvent par enregistrer une session à l'oral avec moi que je fais retranscrire par noteboolm. Ce fichier devient un input pour mon prd/spec.
 
 Pour le *white paper*, c'est un fichier qui se compose d'une liste de questions et de leurs réponses. Ça peut être des questions tech, produit ou même philo. Le but de ce fichier est de garder pourquoi on a fait certain choix ET lors de session de vibe/copilot ou [juste question réponse](https://rdesousa.fr/llm-genius/) d'apporter encore plus de contexte.
 
