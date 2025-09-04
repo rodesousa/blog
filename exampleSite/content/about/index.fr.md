@@ -15,8 +15,9 @@ math:
 
 La stack que j'utilise le plus souvent:
 
-- **Back**: Elixir
-- **API**: Phoenix, Flask
+- **Programming language**: Elixir/Typescript/Python
+- **Back**: Phoenix
+- **API**: FastAPI
 - **Front**: Phoenix, Next.js
 - **DB**: Postgres, Typesense, Meilisearch, DuckDB
 - **AI**: Claude Code
