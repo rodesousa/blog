@@ -11,16 +11,25 @@ math:
   enable: true
 ---
 
-**Je suis Roberto De Sousa, je suis développeur, + de 10 ans d'expérience.** J'ai navigué entre des postes de dev (back/front), de SRE/devops/archi jusqu'à lead/CTO. Très, très grand fan des langages de programmation fonctionnel et surtout de la stack elixir **mais fermé à aucun langage** *but i'm afraid by rust*.
+**Je suis Roberto De Sousa, je suis développeur, + de 10 ans d'expérience.** J'ai navigué entre des postes de dev (back/front), de SRE/devops/archi jusqu'à lead/CTO. Très, très grand fan des langages de programmation fonctionnel mais je suis agnostique des langages.
+
+La stack que j'utilise le plus souvent:
+
+- **Back**: Elixir
+- **API**: Phoenix, Flask
+- **Front**: Phoenix, Next.js
+- **DB**: Postgres, Typesense, Meilisearch, DuckDB
+- **AI**: Claude Code
 
 J'ai réalisé en 2019, que le management Agile n'était pas du tout ce qu'il prétendait être. J'ai accompagné [Vincent Cornet](https://www.linkedin.com/in/vincent-cornet-030ab387/) dans un mémoire sur une critique de l'Agile qui m'a intéressé à la sociologie du travail et puis à d'autres types d'organisations. J'ai écrit des articles et pu mettre en place des alternatives comme [shape up](https://basecamp.com/shapeup/shape-up.pdf), [game day](https://medium.com/paris-chaos-engineering-community/un-gameday-dans-ma-team-un-besoin-de-transmettre-du-savoir-faire-42682477943e), et pleins d'autres choses.
 
-Depuis 2023 je me suis lancé dans l'entreprenariat, j'ai cofondé [cohortes](https://www.cohortes.co/), une solution de récolte et d'analyse AI de témoignage de salarié en texte libre pour aider les acteurs de l'amélioration des conditions de travail. J'ai la chance de faire partie de [l'Agora DODES](https://agora-dodes.fr/) et d'être proche des mouvements de [l'ESS](https://www.ess-france.org/) de la [QVCT](https://www.anact.fr/qualite-de-vie-et-des-conditions-de-travail)
+Depuis 2023 je me suis lancé dans l'entreprenariat, j'ai cofondé [cohortes](https://www.cohortes.co/), une solution de récolte et d'analyse AI de témoignage de salarié en texte libre pour aider les acteurs de l'amélioration des conditions de travail. J'ai la chance de faire partie de [l'Agora DODES](https://agora-dodes.fr/) et d'être proche des mouvements de [l'ESS](https://www.ess-france.org/) de la [QVCT](https://www.anact.fr/qualite-de-vie-et-des-conditions-de-travail).
 
-En ce moment je recherche une nouvelle aventure, en CDI, en tant que CTO early stage ou < 50 personnes, head of engineering, ou un poste de lead dev à forte valeur tech **with AI**. Faire profiter de ma double casquette, stratégique et technique.
+Je suis arrivé au bout de ce qu'on cherchait, donc je recherche une nouvelle aventure, en CDI, soit en tant que CTO *hands-on*, early stage, < 50 personnes ou un poste de head of engineering, staff senior engineer.
 
 💡 **Ce qui m’anime : poser une culture tech saine et très ambitieuse.**
 - 🙅‍♂️ Pas de culture du rush.
+- 🙅‍♂️ Les secteurs de la finance, assurance, banque ne m'intéresse pas
 - 🙅‍♂️ Pas de culture du micro management.
 - 🙅‍♂️ Pas d’approche industrielle où les devs enchaînent des tickets sans respirer.
 - 🚀 Approche projet plutôt que ticket.
@@ -28,13 +37,9 @@ En ce moment je recherche une nouvelle aventure, en CDI, en tant que CTO early s
 - 🚀 Responsabilisation plutôt que surveillance.
 - 🔧 Poser une vision tech solide, capable de guider des choix produit à long terme
 - 🔧 Faire grandir les équipes vers l’autonomie, la qualité et la curiosité technique
-- 🔧 Monter des process de delivery sains inspiré de la méthodo shape up
 - 🔧 Travailler main dans la main avec le produit ET les sales pour livrer vite ET bien
-
-**Important**
-
-- 🙅‍♂️ Les secteurs de la finance, assurance, banque ne m'intéresse pas
-- 🔥 ESS, SCOP gros plus :)
+- 🔥 ESS, SCOP gros plus
+- 🔥 Shape up
 - 👎 <a href="/recrutement/">Le live coding est-il vraiment une méthode pertinente dans le processus de recrutement ?</a>
 
 **dessroberto [at] gmail [dot] com**
