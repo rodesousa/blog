@@ -1,6 +1,6 @@
 ---
 weight: 1
-title: "LLM is a genius — Be careful what you wish for"
+title: "Rendre l'hallucination des LLM utile"
 date: 2025-07-23T15:34:40+08:00
 lastmod: 2025-07-23T15:34:40+08:00
 draft: false

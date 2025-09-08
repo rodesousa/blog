@@ -1,11 +1,11 @@
 ---
 weight: 1
-title: "LLM is a genius — Be careful what you wish for"
+title: "Use the hallucination of LLM to your advantage"
 date: 2025-07-23T15:34:40+08:00
 lastmod: 2025-07-23T15:34:40+08:00
 draft: false
 author: "Roberto"
-description: "LLM is a genius — Be careful what you wish for"
+description: "Use the hallucination of llm to your advantage"
 images: []
 resources:
 - name: "featured-image"
