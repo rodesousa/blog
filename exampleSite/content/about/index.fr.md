@@ -72,7 +72,7 @@ Une solution de récolte et d'analyse AI de témoignage de salarié en texte lib
   - Réduction de 90 % le temps d’analyse manuelle, donnant plus de temps à l'interprétation des témoignages
 + Formations données à des profils tech et non-tech : prompting, vibe coding, agents IA
 
-**Février 2022 à Novembre 2023 - Lead Dev Elixir, Front/Back** (Sapiologie)
+**Février 2022 à Novembre 2023 - Lead Tech** (Sapiologie)
 
 ERP ACV & impact social à destination des TPE/PME
 
@@ -88,7 +88,7 @@ ERP ACV & impact social à destination des TPE/PME
   - Implémentation d’une base Datomic-like sous Postgres, pour un historique temps réel des modifications et gestion de revert
 + Encadrement technique, choix d’architecture, gestion de l'infra
 
-**Juin 2021 à Février 2022 - Tech lead infra** (Arkhn)
+**Juin 2021 à Février 2022 - Lead Infra** (Arkhn)
 
 Rendre la donnée hospitalière interopérable
 
@@ -102,7 +102,7 @@ Rendre la donnée hospitalière interopérable
     - Plusieurs stratégies d'indexage (notamment BRIN)
     - Réduction du temps de traitement des migrations de ~70 %
 
-**Mai 2019 à Octobre 2020 - Développeur Senior Elixir** (Pandascore)
+**Mai 2019 à Octobre 2020 - Développeur Senior** (Pandascore)
 
 Provider de data/metadata de jeu de scène esport
 
@@ -113,7 +113,7 @@ Provider de data/metadata de jeu de scène esport
   - Migration de Helm vers Kustomize pour gagner maintenabilité
   - Formation internes sur Kubernetes, CI/CD
 
-**Fév 2019 à Mai 2019 - Kubernetes Consultant / Golang Dev**(Thalès Digital Factory, Paris)
+**Fév 2019 à Mai 2019 - SRE**(Thalès Digital Factory, Paris)
 
 Développement d’une plateforme *Kubernetes as the service* pour des services techs de ~100 personnes
 
@@ -144,7 +144,7 @@ Application de jobboard
 
 + Développement en Scala avec Play2
 
-**Avr 2015 à Mars 2016 - Consultant DevOps && Bigdata** (Banque de France, Paris)
+**Avr 2015 à Mars 2016 - Consultant DevOps** (Banque de France, Paris)
 
 Banque de France – Pôle Big Data
 
