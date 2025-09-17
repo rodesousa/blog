@@ -69,7 +69,7 @@ Une solution de récolte et d'analyse AI de témoignage de salarié en texte lib
   - Postgres pour la gestion des utilisateurs et des témoignages
   - Typesense pour recherche sémantique via embeddings, intégré à un système RAG pour des réponses contextuelles et enrichies.
   - Orchestration d’agents AI via Oban pour l’analyse automatisée via LLM self-hosted & cloud
-  - Réduction de 90 % le temps d’analyse manuelle, donnant plus de temps à l’interprétation des témoignages
+  - Réduction de 90 % le temps d’analyse manuelle, donnant plus de temps à l'interprétation des témoignages
 + Formations données à des profils tech et non-tech : prompting, vibe coding, agents IA
 
 **Février 2022 à Novembre 2023 - Lead Dev Elixir, Front/Back** (Sapiologie)
@@ -93,7 +93,7 @@ ERP ACV & impact social à destination des TPE/PME
 Rendre la donnée hospitalière interopérable
 
 + Pilotage de la modernisation des infrastructures
-  - Déploiement et gestion d'infra à l'intérieur des hospitaux (4 hôpitaux, ~ 100 To de data, ~20 services)
+  - Déploiement et gestion d'infra à l'intérieur des hôpitaux (4 hôpitaux, ~ 100 To de data, ~20 services)
   - Scaleway, ansible, nomad
 + Mise en place et diffusion des bonnes pratiques : TDD, CI/CD
 + Organisation de game days sur les processus de déploiement pour améliorer la résilience et former les équipes
@@ -177,7 +177,7 @@ Mise en place de https://mailiz.mssante.fr/, plateforme de messagerie sécurisé
 Formation
 ---------
 
-2011-2013: *Master Ingénierie Informatique (Système Réseau Internet) - Université Denis Diderot (Paris VII)*
+2011-2013: Master Ingénierie Informatique - Université Denis Diderot
 
-2007-2011: *Licence Informatique - Université Denis Diderot (Paris VII)*
+2007-2011: Licence Informatique - Université Denis Diderot
 
