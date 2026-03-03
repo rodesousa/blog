@@ -104,19 +104,24 @@
 ---
 
 ## Phase 6: SEO
-**Status:** ⏳ PENDING
-- [ ] Composant `<Meta>` réutilisable injecté via `<Links>` React Router
-- [ ] `<title>` et `<meta name="description">` dynamiques par page
-- [ ] Open Graph tags (`og:title`, `og:description`, `og:image`, `og:type`)
-- [ ] Twitter Card tags
-- [ ] `canonical` URL sur chaque page
-- [ ] `hreflang` alternates (FR ↔ EN) sur les pages bilingues
-- [ ] Structured data JSON-LD (type `Article`) sur les posts
-- [ ] Structured data JSON-LD (type `Person`) sur la page About
+**Status:** 🔄 IN_PROGRESS
+- [x] Composant `<Meta>` réutilisable injecté via `<Links>` React Router
+- [x] `<title>` et `<meta name="description">` dynamiques par page
+- [x] Open Graph tags (`og:title`, `og:description`, `og:image`, `og:type`)
+- [x] Twitter Card tags
+- [x] `canonical` URL sur chaque page
+- [x] `hreflang` alternates (FR ↔ EN) sur les pages bilingues
+- [x] Structured data JSON-LD (type `Article`) sur les posts
+- [x] Structured data JSON-LD (type `Person`) sur la page About
 - [ ] Générer `sitemap.xml` (via loader ou script de build)
 - [ ] Générer `robots.txt`
 
 **Notes:**
+- Approche: helper `app/lib/seo.ts` avec `buildPageMeta()` et `buildPostMeta()` — fonctions retournant des tableaux de MetaDescriptor React Router v7
+- OG, Twitter, canonical, hreflang, JSON-LD tous dans le `meta()` export de chaque route (via `{ tagName: "link", ... }` et `{ "script:ld+json": {...} }`)
+- `hasPostLocale(slug, locale)` ajouté dans `posts.ts` pour vérifier l'existence d'un post en langue alternative — hreflang alternatif ajouté seulement si la version existe
+- `SITE_URL = "https://rdesousa.fr"`, `DEFAULT_OG_IMAGE = avatar.png` (pas de og-image dédiée pour l'instant)
+- typecheck ✓ build ✓
 
 ---
 

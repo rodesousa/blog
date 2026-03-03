@@ -1,5 +1,6 @@
 import { getAllPosts } from "../../lib/posts";
 import { PostCard } from "../../components/PostCard";
+import { buildPageMeta } from "../../lib/seo";
 import type { Route } from "./+types/home";
 
 export async function loader() {
@@ -7,15 +8,14 @@ export async function loader() {
   return { posts };
 }
 
-export function meta() {
-  return [
-    { title: "rdesousa.fr — Engineering & Management" },
-    {
-      name: "description",
-      content:
-        "Roberto De Sousa's blog on software engineering, Elixir, and management.",
-    },
-  ];
+export function meta(): Route.MetaDescriptors {
+  return buildPageMeta({
+    title: "rdesousa.fr — Engineering & Management",
+    description:
+      "Roberto De Sousa's blog on software engineering, Elixir, and management.",
+    path: "/en",
+    locale: "en",
+  });
 }
 
 export default function EnHome({ loaderData }: Route.ComponentProps) {

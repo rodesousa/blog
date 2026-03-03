@@ -1,4 +1,5 @@
 import { getAboutPage } from "../lib/posts";
+import { buildPageMeta, SITE_URL } from "../lib/seo";
 import type { Route } from "./+types/about";
 
 export async function loader() {
@@ -7,11 +8,26 @@ export async function loader() {
   return { about };
 }
 
-export function meta({ data }: Route.MetaArgs) {
+export function meta({ data }: Route.MetaArgs): Route.MetaDescriptors {
   if (!data) return [{ title: "À propos — rdesousa.fr" }];
+  const { about } = data;
   return [
-    { title: `${data.about.title} — rdesousa.fr` },
-    { name: "description", content: data.about.description },
+    ...buildPageMeta({
+      title: `${about.title} — rdesousa.fr`,
+      description: about.description,
+      path: "/about",
+      locale: "fr",
+    }),
+    {
+      "script:ld+json": {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        name: "Roberto De Sousa",
+        url: SITE_URL,
+        description: about.description,
+        sameAs: ["https://github.com/rodesousa"],
+      },
+    },
   ];
 }
 

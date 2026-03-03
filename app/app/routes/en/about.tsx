@@ -1,11 +1,13 @@
-export function meta() {
-  return [
-    { title: "About — rdesousa.fr" },
-    {
-      name: "description",
-      content: "About Roberto De Sousa, software engineer and manager.",
-    },
-  ];
+import { buildPageMeta } from "../../lib/seo";
+import type { Route } from "./+types/about";
+
+export function meta(): Route.MetaDescriptors {
+  return buildPageMeta({
+    title: "About — rdesousa.fr",
+    description: "About Roberto De Sousa, software engineer and manager.",
+    path: "/en/about",
+    locale: "en",
+  });
 }
 
 export default function EnAbout() {

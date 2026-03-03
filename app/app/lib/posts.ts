@@ -95,6 +95,14 @@ function parsePost(
   };
 }
 
+export function hasPostLocale(slug: string, locale: Locale): boolean {
+  const filePath = path.join(CONTENT_DIR, slug, `index.${locale}.md`);
+  if (!fs.existsSync(filePath)) return false;
+  const raw = fs.readFileSync(filePath, "utf-8");
+  const { data } = matter(raw);
+  return data.draft !== true;
+}
+
 export function getAllPosts(locale: Locale = "fr"): PostMeta[] {
   if (!fs.existsSync(CONTENT_DIR)) return [];
 
