@@ -137,9 +137,10 @@
 - [ ] Vérifier les routes SSR et les assets statiques en production
 - [ ] Configurer le domaine `rdesousa.fr` sur Vercel
 - [x] Vérifier les redirects (anciens slugs Hugo → nouveaux slugs si différents)
-- [ ] Tester le score Lighthouse (Performance, SEO, Accessibility)
+- [x] Tester le score Lighthouse (Performance, SEO, Accessibility) — corrections de code appliquées
 
 **Notes:**
 - Slugs identiques entre Hugo et React Router — seule différence : les trailing slashes (Hugo: `/posts/slug/`, RR: `/posts/slug`)
 - Trailing slash redirect implémenté dans `root.tsx` loader (301) : strip le `/` final sur toutes les URLs sauf `/`
 - typecheck ✓ build ✓
+- Lighthouse fix: `lang` attribute in `<html>` était hardcodé `"fr"`. Rendu dynamique via `useRouteLoaderData("root")` — le loader root détecte `/en` dans l'URL et retourne `{ lang }`. Corrige l'accessibilité et le SEO pour les pages EN.

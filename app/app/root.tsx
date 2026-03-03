@@ -6,6 +6,7 @@ import {
   redirect,
   Scripts,
   ScrollRestoration,
+  useRouteLoaderData,
 } from "react-router";
 
 import type { Route } from "./+types/root";
@@ -18,7 +19,8 @@ export async function loader({ request }: Route.LoaderArgs) {
   if (url.pathname !== "/" && url.pathname.endsWith("/")) {
     return redirect(url.pathname.slice(0, -1) + url.search, 301);
   }
-  return null;
+  const lang = url.pathname.startsWith("/en") ? "en" : "fr";
+  return { lang };
 }
 
 export const links: Route.LinksFunction = () => [
@@ -36,8 +38,11 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const data = useRouteLoaderData<typeof loader>("root");
+  const lang = data?.lang ?? "fr";
+
   return (
-    <html lang="fr">
+    <html lang={lang}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
