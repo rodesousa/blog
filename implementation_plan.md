@@ -81,22 +81,25 @@
 ---
 
 ## Phase 5: Migration du contenu
-**Status:** 🔄 IN_PROGRESS
+**Status:** ✅ DONE
 - [x] Copier les 7 posts depuis `exampleSite/content/posts/` en adaptant au format MDX si besoin
 - [x] Migrer les images de chaque post dans `public/posts/[slug]/`
 - [x] Migrer l'avatar (`public/images/avatar.png`)
-- [ ] Migrer la page About (`index.fr.md`) — route /about et /en/about
-- [ ] Vérifier le rendu de chaque post (images, code, formatting)
-- [ ] Vérifier les images `featured-image` de chaque post
-- [ ] Gérer les blocs Mermaid (client-only render si SSR-unsafe)
+- [x] Migrer la page About (`index.fr.md`) — route /about et /en/about
+- [x] Vérifier le rendu de chaque post (images, code, formatting)
+- [x] Vérifier les images `featured-image` de chaque post
+- [x] Gérer les blocs Mermaid (client-only render si SSR-unsafe)
 
 **Notes:**
 - 6 posts copiés dans `app/content/posts/` (bad_tools déjà existant + 5 nouveaux)
 - Posts: llm-feedback-part-1 (FR only), llm-feedback-part-2 (FR only), llm-genius (FR+EN), recrutement (FR only), with-elixir (FR only)
 - Images copiées dans `public/posts/[slug]/` — inline images référencées par chemins relatifs (ex: `vibe1.png`) résoudront correctement depuis `/posts/[slug]/`
-- `en/about` page en attente: `exampleSite/content/about/index.en.md` est le contenu du thème LoveIt, pas du blog → pas de vraie page EN pour l'about
+- `en/about` page: `exampleSite/content/about/index.en.md` est le contenu du thème LoveIt, pas du blog → pas de vraie page EN pour l'about (hors scope)
+- About FR migrée: `app/content/about/index.fr.md` + `getAboutPage()` dans `posts.ts` + loader dans `about.tsx`
 - Avatar: `public/images/avatar.png`
 - shape_mode et dette.md exclus (hors scope)
+- Relative image paths fixed: `markdownToHtml(content, slug)` does post-processing regex on `<img src="...">` to rewrite relative paths to `/posts/${slug}/filename`
+- No Mermaid code blocks found in posts — only text mentions of "mermaid" — no special handling needed
 
 ---
 

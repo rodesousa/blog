@@ -38,7 +38,10 @@ export interface PostMeta {
   frontmatter: PostFrontmatter;
 }
 
-async function markdownToHtml(content: string): Promise<string> {
+async function markdownToHtml(
+  content: string,
+  slug?: string
+): Promise<string> {
   const result = await unified()
     .use(remarkParse)
     .use(remarkGfm)
@@ -46,7 +49,18 @@ async function markdownToHtml(content: string): Promise<string> {
     .use(rehypeShiki, { theme: "github-dark" })
     .use(rehypeStringify, { allowDangerousHtml: true })
     .process(content);
-  return String(result);
+
+  let html = String(result);
+
+  if (slug) {
+    // Rewrite relative img src (both from markdown and raw HTML) to absolute paths
+    html = html.replace(
+      /(<img[^>]*?\ssrc=")(?!\/|https?:)([^"]+)"/gi,
+      `$1/posts/${slug}/$2"`
+    );
+  }
+
+  return html;
 }
 
 function parsePost(
@@ -131,7 +145,7 @@ export async function getPostBySlug(
   const { data, content } = matter(raw);
   if (data.draft === true) return null;
 
-  const contentHtml = await markdownToHtml(content);
+  const contentHtml = await markdownToHtml(content, slug);
 
   const featuredImage =
     data.resources?.find(
