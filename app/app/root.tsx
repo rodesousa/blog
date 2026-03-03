@@ -3,6 +3,7 @@ import {
   Links,
   Meta,
   Outlet,
+  redirect,
   Scripts,
   ScrollRestoration,
 } from "react-router";
@@ -11,6 +12,14 @@ import type { Route } from "./+types/root";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import "./app.css";
+
+export async function loader({ request }: Route.LoaderArgs) {
+  const url = new URL(request.url);
+  if (url.pathname !== "/" && url.pathname.endsWith("/")) {
+    return redirect(url.pathname.slice(0, -1) + url.search, 301);
+  }
+  return null;
+}
 
 export const links: Route.LinksFunction = () => [
   { rel: "manifest", href: "/site.webmanifest" },

@@ -129,14 +129,17 @@
 ---
 
 ## Phase 7: Déploiement Vercel
-**Status:** ⏳ PENDING
+**Status:** 🔄 IN_PROGRESS
 - [ ] Connecter le repo GitHub à Vercel
 - [ ] Configurer les variables d'environnement si nécessaires
 - [ ] Vérifier la détection automatique du framework ou configurer manuellement
 - [ ] Tester le build Vercel (preview deployment)
 - [ ] Vérifier les routes SSR et les assets statiques en production
 - [ ] Configurer le domaine `rdesousa.fr` sur Vercel
-- [ ] Vérifier les redirects (anciens slugs Hugo → nouveaux slugs si différents)
+- [x] Vérifier les redirects (anciens slugs Hugo → nouveaux slugs si différents)
 - [ ] Tester le score Lighthouse (Performance, SEO, Accessibility)
 
 **Notes:**
+- Slugs identiques entre Hugo et React Router — seule différence : les trailing slashes (Hugo: `/posts/slug/`, RR: `/posts/slug`)
+- Trailing slash redirect implémenté dans `root.tsx` loader (301) : strip le `/` final sur toutes les URLs sauf `/`
+- typecheck ✓ build ✓
