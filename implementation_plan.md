@@ -38,17 +38,23 @@
 ---
 
 ## Phase 3: Structure des routes et routing i18n
-**Status:** ⏳ PENDING
-- [ ] Définir la convention de routing : `/posts/[slug]` (FR) + `/en/posts/[slug]` (EN)
-- [ ] Créer la route homepage `/` (liste des posts FR)
-- [ ] Créer la route `/en` (liste des posts EN)
-- [ ] Créer la route `/posts/[slug]` (post FR)
-- [ ] Créer la route `/en/posts/[slug]` (post EN)
-- [ ] Créer la route `/about` et `/en/about`
-- [ ] Mettre en place un helper `useLocale()` ou un layout racine gérant la locale
-- [ ] Lien de switch de langue (FR ↔ EN) dans le header
+**Status:** ✅ DONE
+- [x] Définir la convention de routing : `/posts/[slug]` (FR) + `/en/posts/[slug]` (EN)
+- [x] Créer la route homepage `/` (liste des posts FR)
+- [x] Créer la route `/en` (liste des posts EN)
+- [x] Créer la route `/posts/[slug]` (post FR)
+- [x] Créer la route `/en/posts/[slug]` (post EN)
+- [x] Créer la route `/about` et `/en/about`
+- [x] Mettre en place un helper `useLocale()` ou un layout racine gérant la locale
+- [x] Lien de switch de langue (FR ↔ EN) dans le header
 
 **Notes:**
+- Routes définies via `routes.ts` config (pas de file-based routing automatique)
+- Convention: routes FR à la racine, routes EN préfixées `/en/`
+- `app/lib/locale.ts` expose `useLocale()` (détection URL) et `getAlternateUrl()` (switch FR↔EN)
+- 404 via `throw new Response(...)` (évite `data()` déprécié)
+- About pages = stubs pour l'instant (contenu migré en Phase 5)
+- typecheck + build passent sans erreurs
 
 ---
 
