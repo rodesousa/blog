@@ -130,17 +130,20 @@
 
 ## Phase 7: Déploiement Vercel
 **Status:** 🔄 IN_PROGRESS
-- [ ] Connecter le repo GitHub à Vercel
-- [ ] Configurer les variables d'environnement si nécessaires
-- [ ] Vérifier la détection automatique du framework ou configurer manuellement
+- [ ] Connecter le repo GitHub à Vercel (manual — Vercel dashboard, Root Directory: `app`)
+- [x] Configurer les variables d'environnement si nécessaires — aucune env var requise, `SITE_URL` hardcodé dans `app/lib/seo.ts`
+- [ ] Vérifier la détection automatique du framework ou configurer manuellement (manual — Vercel détecte React Router v7 via `@vercel/react-router` preset)
 - [ ] Tester le build Vercel (preview deployment)
 - [ ] Vérifier les routes SSR et les assets statiques en production
 - [ ] Configurer le domaine `rdesousa.fr` sur Vercel
 - [x] Vérifier les redirects (anciens slugs Hugo → nouveaux slugs si différents)
 - [x] Tester le score Lighthouse (Performance, SEO, Accessibility) — corrections de code appliquées
+- [x] Page `/en/about` : contenu réel migré (stub "coming soon" remplacé par traduction EN complète + loader MDX)
 
 **Notes:**
 - Slugs identiques entre Hugo et React Router — seule différence : les trailing slashes (Hugo: `/posts/slug/`, RR: `/posts/slug`)
 - Trailing slash redirect implémenté dans `root.tsx` loader (301) : strip le `/` final sur toutes les URLs sauf `/`
 - typecheck ✓ build ✓
 - Lighthouse fix: `lang` attribute in `<html>` était hardcodé `"fr"`. Rendu dynamique via `useRouteLoaderData("root")` — le loader root détecte `/en` dans l'URL et retourne `{ lang }`. Corrige l'accessibilité et le SEO pour les pages EN.
+- Déploiement Vercel : configurer Root Directory = `app` dans les project settings Vercel (le repo contient Hugo + React app en sous-dossier)
+- `en/about` : `app/content/about/index.en.md` créé (traduction EN), route `en/about.tsx` mise à jour avec loader + JSON-LD Person schema

@@ -1,24 +1,42 @@
-import { buildPageMeta } from "../../lib/seo";
+import { getAboutPage } from "../../lib/posts";
+import { buildPageMeta, SITE_URL } from "../../lib/seo";
 import type { Route } from "./+types/about";
 
-export function meta(): Route.MetaDescriptors {
-  return buildPageMeta({
-    title: "About — rdesousa.fr",
-    description: "About Roberto De Sousa, software engineer and manager.",
-    path: "/en/about",
-    locale: "en",
-  });
+export async function loader() {
+  const about = await getAboutPage("en");
+  if (!about) throw new Response("Page not found", { status: 404 });
+  return { about };
 }
 
-export default function EnAbout() {
+export function meta({ data }: Route.MetaArgs): Route.MetaDescriptors {
+  if (!data) return [{ title: "About — rdesousa.fr" }];
+  const { about } = data;
+  return [
+    ...buildPageMeta({
+      title: `${about.title} — rdesousa.fr`,
+      description: about.description,
+      path: "/en/about",
+      locale: "en",
+    }),
+    {
+      "script:ld+json": {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        name: "Roberto De Sousa",
+        url: SITE_URL,
+        description: about.description,
+        sameAs: ["https://github.com/rodesousa"],
+      },
+    },
+  ];
+}
+
+export default function EnAbout({ loaderData }: Route.ComponentProps) {
+  const { about } = loaderData;
   return (
-    <article>
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">
-        About
-      </h1>
-      <p className="text-gray-600 dark:text-gray-400">
-        Content coming soon — migration in Phase 5.
-      </p>
+    <article className="prose">
+      <h1>{about.title}</h1>
+      <div dangerouslySetInnerHTML={{ __html: about.contentHtml }} />
     </article>
   );
 }
