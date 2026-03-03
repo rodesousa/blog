@@ -104,7 +104,7 @@
 ---
 
 ## Phase 6: SEO
-**Status:** 🔄 IN_PROGRESS
+**Status:** ✅ DONE
 - [x] Composant `<Meta>` réutilisable injecté via `<Links>` React Router
 - [x] `<title>` et `<meta name="description">` dynamiques par page
 - [x] Open Graph tags (`og:title`, `og:description`, `og:image`, `og:type`)
@@ -113,8 +113,8 @@
 - [x] `hreflang` alternates (FR ↔ EN) sur les pages bilingues
 - [x] Structured data JSON-LD (type `Article`) sur les posts
 - [x] Structured data JSON-LD (type `Person`) sur la page About
-- [ ] Générer `sitemap.xml` (via loader ou script de build)
-- [ ] Générer `robots.txt`
+- [x] Générer `sitemap.xml` (via loader ou script de build)
+- [x] Générer `robots.txt`
 
 **Notes:**
 - Approche: helper `app/lib/seo.ts` avec `buildPageMeta()` et `buildPostMeta()` — fonctions retournant des tableaux de MetaDescriptor React Router v7
@@ -122,6 +122,9 @@
 - `hasPostLocale(slug, locale)` ajouté dans `posts.ts` pour vérifier l'existence d'un post en langue alternative — hreflang alternatif ajouté seulement si la version existe
 - `SITE_URL = "https://rdesousa.fr"`, `DEFAULT_OG_IMAGE = avatar.png` (pas de og-image dédiée pour l'instant)
 - typecheck ✓ build ✓
+- `sitemap.xml`: route loader `routes/sitemap[.xml].ts` — liste toutes les URLs (static + posts FR/EN) avec xhtml:link alternates pour les posts bilingues; Content-Type application/xml; Cache-Control 1h
+- `robots.txt`: route loader `routes/robots[.txt].ts` — Allow: *, Sitemap: https://rdesousa.fr/sitemap.xml; Cache-Control 24h
+- Routes enregistrées dans `routes.ts`: `sitemap.xml` et `robots.txt`
 
 ---
 
