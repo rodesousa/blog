@@ -1,22 +1,26 @@
-export function meta() {
+import { getAboutPage } from "../lib/posts";
+import type { Route } from "./+types/about";
+
+export async function loader() {
+  const about = await getAboutPage("fr");
+  if (!about) throw new Response("Page introuvable", { status: 404 });
+  return { about };
+}
+
+export function meta({ data }: Route.MetaArgs) {
+  if (!data) return [{ title: "À propos — rdesousa.fr" }];
   return [
-    { title: "À propos — rdesousa.fr" },
-    {
-      name: "description",
-      content: "À propos de Roberto De Sousa, ingénieur et manager.",
-    },
+    { title: `${data.about.title} — rdesousa.fr` },
+    { name: "description", content: data.about.description },
   ];
 }
 
-export default function About() {
+export default function About({ loaderData }: Route.ComponentProps) {
+  const { about } = loaderData;
   return (
-    <article>
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">
-        À propos
-      </h1>
-      <p className="text-gray-600 dark:text-gray-400">
-        Contenu à venir — migration en Phase 5.
-      </p>
+    <article className="prose">
+      <h1>{about.title}</h1>
+      <div dangerouslySetInnerHTML={{ __html: about.contentHtml }} />
     </article>
   );
 }

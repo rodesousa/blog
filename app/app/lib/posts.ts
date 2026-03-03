@@ -9,6 +9,7 @@ import rehypeShiki from "@shikijs/rehype";
 import rehypeStringify from "rehype-stringify";
 
 const CONTENT_DIR = path.join(process.cwd(), "content", "posts");
+const ABOUT_DIR = path.join(process.cwd(), "content", "about");
 
 export type Locale = "fr" | "en";
 
@@ -100,6 +101,23 @@ export function getAllPosts(locale: Locale = "fr"): PostMeta[] {
       new Date(b.frontmatter.date).getTime() -
       new Date(a.frontmatter.date).getTime()
   );
+}
+
+export async function getAboutPage(
+  locale: Locale = "fr"
+): Promise<{ title: string; description: string; contentHtml: string } | null> {
+  const filePath = path.join(ABOUT_DIR, `index.${locale}.md`);
+  if (!fs.existsSync(filePath)) return null;
+
+  const raw = fs.readFileSync(filePath, "utf-8");
+  const { data, content } = matter(raw);
+  const contentHtml = await markdownToHtml(content);
+
+  return {
+    title: data.title ?? "",
+    description: data.description ?? "",
+    contentHtml,
+  };
 }
 
 export async function getPostBySlug(
