@@ -19,16 +19,21 @@
 ---
 
 ## Phase 2: Infrastructure MDX et parsing du contenu
-**Status:** ⏳ PENDING
-- [ ] Installer `@mdx-js/rollup` (ou équivalent vite) + plugins remark/rehype
-- [ ] Installer `gray-matter` pour parser le frontmatter
-- [ ] Configurer Shiki pour le syntax highlighting des blocs de code
-- [ ] Configurer `remark-gfm` (tables, strikethrough, task lists)
-- [ ] Tester le rendu d'un post existant en MDX
-- [ ] Mettre en place le pipeline de lecture des fichiers MDX depuis `content/posts/`
-- [ ] Créer un module `lib/posts.ts` exposant `getAllPosts()` et `getPostBySlug(slug)`
+**Status:** ✅ DONE
+- [x] Installer `unified` + `remark-parse` + `remark-gfm` + `remark-rehype` + `rehype-stringify` (pipeline serveur, pas de Vite plugin MDX)
+- [x] Installer `gray-matter` pour parser le frontmatter
+- [x] Configurer Shiki pour le syntax highlighting via `@shikijs/rehype` (theme: github-dark)
+- [x] Configurer `remark-gfm` (tables, strikethrough, task lists)
+- [x] Tester le rendu du post `bad_tools` — frontmatter parsé, HTML généré correctement
+- [x] Pipeline de lecture depuis `content/posts/[slug]/index.{fr,en}.md`
+- [x] Module `app/lib/posts.ts` exposant `getAllPosts(locale)` et `getPostBySlug(slug, locale)`
 
 **Notes:**
+- Décision: pipeline serveur `unified/remark/rehype` plutôt que `@mdx-js/rollup` (plus simple pour SSR loaders)
+- Content directory: `app/content/posts/[slug]/` — un post copié pour test (`bad_tools`), migration complète en Phase 5
+- `getAllPosts()` filtre les drafts, trie par date décroissante
+- `getPostBySlug()` retourne `contentHtml` (string HTML)  + frontmatter complet
+- `featuredImage` extrait depuis `resources[name=featured-image].src` dans le frontmatter Hugo
 
 ---
 
