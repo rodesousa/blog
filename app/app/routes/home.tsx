@@ -1,6 +1,5 @@
-import { Link, useLocation } from "react-router";
 import { getAllPosts } from "../lib/posts";
-import { getAlternateUrl } from "../lib/locale";
+import { PostCard } from "../components/PostCard";
 import type { Route } from "./+types/home";
 
 export async function loader() {
@@ -21,37 +20,16 @@ export function meta() {
 
 export default function Home({ loaderData }: Route.ComponentProps) {
   const { posts } = loaderData;
-  const location = useLocation();
 
   return (
-    <main>
-      <header>
-        <h1>rdesousa.fr</h1>
-        <nav>
-          <Link to="/about">À propos</Link>
-          <Link to={getAlternateUrl(location.pathname)}>EN</Link>
-        </nav>
-      </header>
-
-      <ul>
-        {posts.map((post) => (
-          <li key={post.slug}>
-            <Link to={`/posts/${post.slug}`}>
-              <h2>{post.frontmatter.title}</h2>
-              <time dateTime={post.frontmatter.date}>
-                {new Date(post.frontmatter.date).toLocaleDateString("fr-FR", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </time>
-              {post.frontmatter.description && (
-                <p>{post.frontmatter.description}</p>
-              )}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </main>
+    <div>
+      {posts.length === 0 ? (
+        <p className="text-gray-500 dark:text-gray-500">Aucun article pour l'instant.</p>
+      ) : (
+        posts.map((post) => (
+          <PostCard key={post.slug} post={post} locale="fr" />
+        ))
+      )}
+    </div>
   );
 }

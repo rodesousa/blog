@@ -1,0 +1,16 @@
+{
+  "name": "rdesousa.fr",
+  "short_name": "rdesousa",
+  "description": "Blog de Roberto De Sousa sur l'ingénierie logicielle et le management.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#111827",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}

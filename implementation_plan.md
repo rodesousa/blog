@@ -59,17 +59,24 @@
 ---
 
 ## Phase 4: Layout et composants UI de base
-**Status:** ⏳ PENDING
-- [ ] Créer le layout racine (`root.tsx`) avec `<html>`, `<head>`, `<body>`
-- [ ] Composant `Header` : titre du blog + navigation (Posts, About, GitHub)
-- [ ] Composant `Footer` : copyright, licence CC BY-NC 4.0
-- [ ] Composant `PostCard` : thumbnail + titre + date + tags pour la liste
-- [ ] Composant `PostLayout` : layout d'un article (titre, date, tags, contenu, image featured)
-- [ ] Composant `TableOfContents` : généré depuis les headings du MDX
-- [ ] CSS de base (Tailwind CSS ou CSS modules — à choisir)
-- [ ] Favicon et manifest (`public/favicon.ico`, `public/site.webmanifest`)
+**Status:** ✅ DONE
+- [x] Créer le layout racine (`root.tsx`) avec `<html>`, `<head>`, `<body>`
+- [x] Composant `Header` : titre du blog + navigation (Posts, About, GitHub)
+- [x] Composant `Footer` : copyright, licence CC BY-NC 4.0
+- [x] Composant `PostCard` : thumbnail + titre + date + tags pour la liste
+- [x] Composant `PostLayout` : layout d'un article (titre, date, tags, contenu, image featured)
+- [x] CSS de base (Tailwind CSS — prose styles custom pour le contenu article)
+- [x] Favicon et manifest (`public/favicon.ico`, `public/site.webmanifest`)
+- [ ] Composant `TableOfContents` : généré depuis les headings du MDX (reporté à Phase 5+)
 
 **Notes:**
+- Components in `app/app/components/`: Header, Footer, PostCard, PostLayout
+- Header uses `useLocale()` internally — locale-aware nav and language switch
+- Root layout (`root.tsx`) wraps all pages with Header + `<main max-w-3xl>` + Footer
+- Prose styles written as custom CSS in `app.css` (no @tailwindcss/typography needed)
+- TableOfContents deferred — not critical for v1
+- `public/site.webmanifest` added and linked in root.tsx
+- typecheck ✓ build ✓
 
 ---
 

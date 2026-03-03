@@ -8,9 +8,12 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
+import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
 import "./app.css";
 
 export const links: Route.LinksFunction = () => [
+  { rel: "manifest", href: "/site.webmanifest" },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
@@ -25,15 +28,19 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="fr">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
       </head>
-      <body>
-        {children}
+      <body className="min-h-screen flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
+        <Header />
+        <main className="flex-1 max-w-3xl mx-auto w-full px-4 py-12">
+          {children}
+        </main>
+        <Footer />
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -62,14 +69,14 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
+    <div className="pt-8">
+      <h1 className="text-4xl font-bold mb-4">{message}</h1>
+      <p className="text-gray-600 dark:text-gray-400">{details}</p>
       {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
+        <pre className="mt-4 p-4 bg-gray-100 dark:bg-gray-900 rounded overflow-x-auto text-sm">
           <code>{stack}</code>
         </pre>
       )}
-    </main>
+    </div>
   );
 }
