@@ -11,10 +11,21 @@ export function PostCard({ post, locale }: PostCardProps) {
   const { slug, frontmatter } = post;
   const href = locale === "en" ? `/en/posts/${slug}` : `/posts/${slug}`;
   const dateLocale = locale === "en" ? "en-US" : "fr-FR";
+  const imageSrc = frontmatter.featuredImage
+    ? `/posts/${slug}/${frontmatter.featuredImage}`
+    : null;
 
   return (
     <article className="group border-b border-gray-100 dark:border-gray-800 last:border-b-0 py-8">
       <Link to={href} className="block">
+        {imageSrc && (
+          <img
+            src={imageSrc}
+            alt={frontmatter.title}
+            className="w-full rounded-lg mb-4 object-cover max-h-64"
+          />
+        )}
+
         <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors mb-2">
           {frontmatter.title}
         </h2>
