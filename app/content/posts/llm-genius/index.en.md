@@ -9,7 +9,7 @@ description: "Use the hallucination of llm to your advantage"
 images: []
 resources:
 - name: "featured-image"
-  src: "featured-image.jpg"
+  src: "featured-image.png"
 tags: ["LLM", "AI"]
 categories: ["AI"]
 
