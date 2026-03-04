@@ -12,7 +12,9 @@
     "routeIdToServerBundleId": {
       "routes/home": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
       "routes/en/home": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/posts": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
       "routes/post": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/en/posts": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
       "routes/en/post": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
       "routes/about": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
       "routes/en/about": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
@@ -44,11 +46,29 @@
           "runtime": "nodejs"
         }
       },
+      "routes/posts": {
+        "id": "routes/posts",
+        "parentId": "root",
+        "file": "app/routes/posts.tsx",
+        "path": "posts",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
       "routes/post": {
         "id": "routes/post",
         "parentId": "root",
         "file": "app/routes/post.tsx",
         "path": "posts/:slug",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/en/posts": {
+        "id": "routes/en/posts",
+        "parentId": "root",
+        "file": "app/routes/en/posts.tsx",
+        "path": "en/posts",
         "config": {
           "runtime": "nodejs"
         }
@@ -130,11 +150,23 @@
         "file": "routes/en/home.tsx",
         "path": "en"
       },
+      "routes/posts": {
+        "id": "routes/posts",
+        "parentId": "root",
+        "file": "routes/posts.tsx",
+        "path": "posts"
+      },
       "routes/post": {
         "id": "routes/post",
         "parentId": "root",
         "file": "routes/post.tsx",
         "path": "posts/:slug"
+      },
+      "routes/en/posts": {
+        "id": "routes/en/posts",
+        "parentId": "root",
+        "file": "routes/en/posts.tsx",
+        "path": "en/posts"
       },
       "routes/en/post": {
         "id": "routes/en/post",
@@ -190,8 +222,16 @@
             "path": "en"
           },
           {
+            "file": "routes/posts.tsx",
+            "path": "posts"
+          },
+          {
             "file": "routes/post.tsx",
             "path": "posts/:slug"
+          },
+          {
+            "file": "routes/en/posts.tsx",
+            "path": "en/posts"
           },
           {
             "file": "routes/en/post.tsx",
