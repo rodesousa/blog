@@ -2,10 +2,10 @@
 weight: 1
 title: "Part 1- Retour sur 8 mois avec les LLM"
 date: 2025-08-11T15:34:40+08:00
-lastmod: 2025-08-11T15:34:40+08:00
+lastmod: 2026-08-28T09:00:00+02:00
 draft: false
 author: "Roberto"
-description: "Part 1- Retour sur 8 mois avec les LLM"
+description: "Retour d'expérience sur 8 mois avec les LLM : trois pratiques de développement — sans LLM, copilot, et vibe coding — et l'impact sur la conception et le cycle de vie du code."
 images: []
 resources: 
 - name: "featured-image"
@@ -20,7 +20,9 @@ Il est temps de mettre par écrit mon retour d'expérience sur l'utilisation des
 
 Et on va commencer par ma pratique de développement. J'ai dorénavant 3 pratiques de dev :
 
-## Sans LLM
+*(Mis à jour le 28 août 2026 : un an plus tard, ces trois pratiques décrivent toujours ma façon de travailler, même si les agents CLI — Claude Code, Cursor CLI — ont pris une place centrale, comme je le raconte dans la [partie 2](/posts/llm-feedback-part-2).)*
+
+## Pourquoi je développe encore sans LLM ?
 
 J'utilise toujours nvim avec [kickstart](https://github.com/nvim-lua/kickstart.nvim). Ça fait des années que j'utilise (n)vim, sur ma machine et en prod. Je ne conseillerai pas à un débutant d'utiliser nvim. C'est quand même beaucoup de temps à "dompter" la conf, les plugins etc. Même si c'est plus facile qu'il y a 10 ans, je pense que ce n'est pas rentable en termes d’éfficacité à court terme.
 
@@ -30,7 +32,7 @@ Avoir un backup, un *copilot*, me donne moins la flemme de faire des trucs consi
 
 Autre chose qui a changé, mermaid est devenu mon meilleur pote. Je décris mon architecture, mes idées, le flow des actions, etc... C'est un format très apprécié chez nos potes les LLM.
 
-## Copilot
+## Comment j'utilise les LLM en copilot ?
 
 Je m'aide des LLM (avec cursor) pour coder, mais je garde le contrôle. Je l'utilise pour deux choses:
 
@@ -58,7 +60,7 @@ Le TDD est extrêmement important pour moi, je le vois comme la fondation de mon
 
 J’en ai toujours fait, mais aujourd’hui j’en fais bien plus. Mon code a gagné en lisibilité et en robustesse et surtout, j’ai remarqué que je développe plus rapidement — non pas avec le code généré par Copilot, mais parce que je consacre davantage de temps à la conception. Ma structure est mieux balisée, je m’égare moins, je fais moins d’allers-retours. Ce gain vient de la préparation en amont de mon code + que le LLM en soit.
 
-## Vibe coding
+## Comment le vibe coding change-t-il ma façon de développer ?
 
 C'est l'un des termes qu'on retrouve le plus quand on parle de développement avec LLM. J'ai l'impression de voir deux sons de cloche:
 
@@ -100,7 +102,7 @@ Pour le prd et le spec, il y a beaucoup d'article sur le sujet. Je trouve que Ge
 - Avec [Sven](https://www.linkedin.com/in/sven-rodriguez/), on s'est dit que le prd et la spec deviennent très très vite obsolète et que ça devient vite un poids à mettre à jour. A chaque grosse modification, je préfère réécrire le prd et le spec.
 - Pour faire un bon prd/spec, je commence souvent par enregistrer une session à l'oral avec moi que je fais retranscrire par noteboolm. Ce fichier devient un input pour mon prd/spec.
 
-Pour le *white paper*, c'est un fichier qui se compose d'une liste de questions et de leurs réponses. Ça peut être des questions tech, produit ou même philo. Le but de ce fichier est de garder pourquoi on a fait certain choix ET lors de session de vibe/copilot ou [juste question réponse](https://rdesousa.fr/llm-genius/) d'apporter encore plus de contexte.
+Pour le *white paper*, c'est un fichier qui se compose d'une liste de questions et de leurs réponses. Ça peut être des questions tech, produit ou même philo. Le but de ce fichier est de garder pourquoi on a fait certain choix ET lors de session de vibe/copilot ou [juste question réponse](/posts/llm-genius) d'apporter encore plus de contexte.
 
 ```text
 ## Pourquoi on est passé de pg_vector à Meilisearch ?

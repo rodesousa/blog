@@ -7,6 +7,7 @@ export async function loader({ params }: Route.LoaderArgs) {
   const post = await getPostBySlug(params.slug, "fr");
   if (!post) throw new Response("Post non trouvé", { status: 404 });
   const hasAlternate = hasPostLocale(params.slug, "en");
+
   return { post, hasAlternate };
 }
 
@@ -20,6 +21,7 @@ export function meta({ data }: Route.MetaArgs): Route.MetaDescriptors {
 
   return buildPostMeta({
     title: `${frontmatter.title} — rdesousa.fr`,
+    breadcrumbName: frontmatter.title,
     description: frontmatter.description ?? "",
     slug: post.slug,
     locale: "fr",

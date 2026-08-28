@@ -33,7 +33,7 @@ I've reached the end of what we set out to do, so I'm looking for a new adventur
 - 🔧 Work hand-in-hand with product AND sales to ship fast AND well.
 - 🔥 ESS, SCOP big plus.
 - 🔥 Shape Up.
-- 👎 [Is live coding really a relevant method in the recruitment process?](/en/posts/llm-genius)
+- 👎 [Le live coding est-il vraiment une méthode pertinente dans le processus de recrutement ?](/en/posts/recrutement)
 
 **dessroberto [at] gmail [dot] com**
 

@@ -5,6 +5,7 @@ import remarkGfm from "remark-gfm";
 import remarkRehype from "remark-rehype";
 import rehypeShiki from "@shikijs/rehype";
 import rehypeStringify from "rehype-stringify";
+import { imageDims } from "./imageDims";
 
 export type Locale = "fr" | "en";
 
@@ -33,11 +34,18 @@ export interface PostFrontmatter {
   featuredImage?: string;
 }
 
+export interface TocItem {
+  id: string;
+  text: string;
+  level: number; // 2 (h2) or 3 (h3)
+}
+
 export interface Post {
   slug: string;
   locale: Locale;
   frontmatter: PostFrontmatter;
   contentHtml: string;
+  toc: TocItem[];
 }
 
 export interface PostMeta {
@@ -46,7 +54,49 @@ export interface PostMeta {
   frontmatter: PostFrontmatter;
 }
 
-async function markdownToHtml(content: string, slug?: string): Promise<string> {
+// Slugify heading text into a stable anchor id: strip accents, lowercase,
+// collapse runs of non-alphanumerics to a single hyphen.
+function slugify(text: string): string {
+  return text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+// Add an id attribute to every h2/h3 and collect them into a TOC. Ids are
+// slugified from the heading text, deduped with -2/-3 suffixes on collision.
+function addHeadingIds(html: string): { html: string; toc: TocItem[] } {
+  const toc: TocItem[] = [];
+  const used = new Map<string, number>();
+
+  const out = html.replace(/<h([23])([^>]*)>(.*?)<\/h\1>/gis, (match, level, attrs, inner) => {
+    const text = inner
+      .replace(/<[^>]+>/g, "")
+      .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/\s+/g, " ")
+      .trim();
+    let id = slugify(text);
+    if (!id) id = `section-${toc.length + 1}`;
+    const seen = used.get(id) ?? 0;
+    used.set(id, seen + 1);
+    if (seen > 0) id = `${id}-${seen + 1}`;
+    toc.push({ id, text, level: Number(level) });
+    return `<h${level} id="${id}"${attrs}>${inner}</h${level}>`;
+  });
+
+  return { html: out, toc };
+}
+
+async function markdownToHtml(
+  content: string,
+  slug?: string
+): Promise<{ html: string; toc: TocItem[] }> {
   const result = await unified()
     .use(remarkParse)
     .use(remarkGfm)
@@ -57,14 +107,37 @@ async function markdownToHtml(content: string, slug?: string): Promise<string> {
 
   let html = String(result);
 
-  if (slug) {
-    html = html.replace(
-      /(<img[^>]*?\ssrc=")(?!\/|https?:)([^"]+)"/gi,
-      `$1/posts/${slug}/$2"`
-    );
-  }
+  // Normalize every <img> in the content:
+  // - absolutize relative srcs (relative to the post folder)
+  // - inject intrinsic width/height when known (avoids CLS)
+  // - add lazy loading + async decoding (unless already present)
+  html = html.replace(/<img\b([^>]*?)>/gi, (match, attrs) => {
+    const srcMatch = attrs.match(/\ssrc="([^"]+)"/i);
+    if (!srcMatch) return match;
 
-  return html;
+    let src = srcMatch[1];
+    let newAttrs = attrs;
+    if (slug && !/^\//.test(src) && !/^https?:/i.test(src)) {
+      const path = `/posts/${slug}/${src}`;
+      newAttrs = attrs.replace(/\ssrc="[^"]+"/i, ` src="${path}"`);
+      src = path;
+    }
+
+    if (!/\bloading=/.test(newAttrs)) {
+      newAttrs += ` loading="lazy" decoding="async"`;
+    }
+    const dims = imageDims(src);
+    if (dims && !/\swidth=/.test(newAttrs)) {
+      newAttrs += ` width="${dims.width}" height="${dims.height}"`;
+    }
+
+    return `<img${newAttrs}>`;
+  });
+
+  html = html.replace(/<p>/i, '<p class="lead">');
+
+  const { html: htmlWithIds, toc } = addHeadingIds(html);
+  return { html: htmlWithIds, toc };
 }
 
 function parseFrontmatter(raw: string): { data: Record<string, unknown>; content: string } {
@@ -131,7 +204,7 @@ export async function getAboutPage(
   if (!raw) return null;
 
   const { data, content } = parseFrontmatter(raw);
-  const contentHtml = await markdownToHtml(content);
+  const { html: contentHtml } = await markdownToHtml(content);
 
   return {
     title: (data.title as string) ?? "",
@@ -151,7 +224,7 @@ export async function getPostBySlug(
   const { data, content } = parseFrontmatter(raw);
   if (data.draft === true) return null;
 
-  const contentHtml = await markdownToHtml(content, slug);
+  const { html: contentHtml, toc } = await markdownToHtml(content, slug);
 
   return {
     slug,
@@ -168,5 +241,6 @@ export async function getPostBySlug(
       featuredImage: extractFeaturedImage(data),
     },
     contentHtml,
+    toc,
   };
 }

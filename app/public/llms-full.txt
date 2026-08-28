@@ -1,0 +1,794 @@
+# rdesousa.fr — Full text
+
+> Blog de Roberto De Sousa : ingénierie logicielle, Elixir, management, IA.
+
+## With, mon meilleur allié pour la lisibilité de code
+
+Source: https://rdesousa.fr/posts/with-elixir
+
+Comme on passe plus de temps à lire du code qu'à l'écrire, il faut trouver des paterns qui améliore la lisibilité. `with` c'est mon *statement* préféré pour gérer des suites de conditions.
+
+Il y a quelque années je faisais: 
+
+```elixir
+
+    socket =
+      with {:ok, user} <- {:user, get_user_by_email(email)},
+           true <- {:check_user, user_can_be_added_to_organization?(user, org_id)} do
+        ...
+        socket
+        |> put_flash(:info, gettext("%{email} added", email: user.email))
+      else
+        {:user, nil} ->
+          ...
+          put_flash(socket, :error, gettext("user not found"))
+        {:check_user, false} ->
+          ...
+          put_flash(socket, :error, gettext("user cannot be admin"))
+      end
+```
+
+Avec cette structure on perd en lisibilité sur:
+
+- l'enchainement des actions du `with`
+- la gestion des erreurs
+
+Si on lit plus qu'on écrit, donc je dois orienter mon écriture pour que ce soit plus simple à lire. Quel est mon besoin ?
+
+- Comprendre rapidement les fonctions appelé
+- Quand je dois debug, je veux savoir ou je dois aller. Pas le besoin de voir toute la gestion d'erreur, ça ne me sert à rien.
+
+
+```elixir
+
+    socket =
+      with {:ok, user} <- get_user_by_email(socket, email),
+           true <- user_can_be_added_to_organization?(socket, user, org_id) do
+        ...
+        socket
+        |> put_flash(:info, gettext("%{email} added", email: user.email))
+      end
+...
+
+defp get_user_by_email(socket, email) do
+  case User.get_by_email(email) do
+    nil -> put_flash(socket, :error, gettext("user not found"))
+      user -> {:ok, user}
+  end
+end
+
+defp user_can_be_added_to_organization?(socket, user, org_id) do
+  case user_can_be_added_to_organization?(user, org_id) do
+    false -> put_flash(socket, :error, gettext("user cannot be admin"))
+    true -> true
+  end
+end
+```
+
+*(Mis à jour le 28 août 2026 : c'est toujours le pattern que j'utilise pour garder du code lisible — et il s'avère encore plus précieux avec le code généré par les agents LLM, qui ont tendance à empiler les conditions imbriquées.)*
+
+
+## Le live coding est-il vraiment une méthode pertinente dans le processus de recrutement ?
+
+Source: https://rdesousa.fr/posts/recrutement
+
+---
+
+Le live coding est la manière pour beaucoup d'entreprise de mesurer les compétences techniques d'un candidat. Selon [codingame](https://www.codingame.com) c'est même très tendance.
+
+<div style="display: flex; justify-content: center;">
+  <img src="problem.png"
+   alt="problem"
+   style="width: 50%;"
+  >
+</div>
+
+<div style="display: flex; justify-content: center;">
+
+🔗 [https://www.codingame.com/work/codingame-and-coderpad-tech-hiring-survey-2023](https://www.codingame.com/work/codingame-and-coderpad-tech-hiring-survey-2023)
+
+</div>
+
+## Comment s'est passé mon dernier live coding ?
+
+Début 2025, un call avec un CTO plutôt agréable, on convient d'une date d'un test technique en présentiel. Je suis reçu par le CTO, café, 5 min plus tard, on me donne un TD à faire (que j'avais trouvé sur github avant). On m'installe devant un écran, dans un open space, avec d'autres devs à côté. J'ai 1h pour le faire, je suis un peu malade, mais ça va le faire. 1h après, on relève ma copie. Je présente mon code devant 2 devs + le CTO. Avant de présenter mon code, j'apprends que ce test est le premier de l'après midi, et après, il y a un test SQL, l'impression de passer une colle de physique. Je suis un peu agacé, mais bon, il n'y a pas mille boites qui font de l'elixir en France.
+
+Ça se passe plutôt bien, au bout de quelques échanges, on discute du fait que j'aurais pu utiliser la fonction `send_after/4` pour résoudre l'un des exos. J'explique que je ne la connais pas. J'avais perçu au moment de coder l'exercice en question qu'il me manquait l'approche idéale. **Stratégiquement**, j'ai choisi le choix de faire un *trade off*, c'est-à-dire de la dette technique. Je dois résoudre l'exercice, mais je suis contraint par le temps.
+
+On commence à discuter des Genserver, des processus erlang et savoir pourquoi je n'ai pas utilisé `send_after/4`. Je me braque un peu, car j'ai l'impression que je suis pénalisé pour ne pas connaitre une fonction. On me pose "Qu'est-ce que c'est qu'un [DynamicSupervisor](https://hexdocs.pm/elixir/DynamicSupervisor.html)" (coup de bol j'en ai fait chez Pandascore, Sapiologie et Cohortes). Trop piqué dans mon égo, alors j'ai la bonne idée de prétendre que je ne sais pas :
+
+> - "Je ne sais pas"
+> - "OK, être un senior et ne pas savoir ça, c'est un no go pour nous. On en reste là, merci Roberto"
+
+2 min plus tard, je suis dehors.
+
+## Quels sont les travers du live coding ?
+
+Le live coding ne reflète pas les conditions réelles des développeurs ni les conditions de développement. Quand j'écris du code, je fais des *trade off*, de la conception, cherche de l'information et discute avec mes collègues. Ça n'existe pas de me retrouver contraint à ne faire aucune de ces choses-là.
+
+Je pense que le live coding c'est recruter un dev en évaluant des compétences techniques abstraites dans des conditions hors sol. On se base sur ça capacité à résoudre des "mots croisés version tech". C'est un poil blessant. Comment on peut prétendre évaluer sérieusement le niveau technique d'un candidat comme ça. Un recrutement, ça se chiffre en dizaine de milliers d'euros. L'implication d'un mauvais recrutement, dizaine/centaine de milliers d'euros.
+
+**Mais surtout, comment on peut manquer autant de stratégie ?**
+
+Dans les jeux de combat, il y a ce qu'on appelle "un piff". C'est le moment où un joueur fait une action offensive qui ne fait pas sens dans le cours de la partie. C'est le fait de ne pas respecter le plan de jeu. Alors oui le piff est aussi utilisé comme un moyen de surprendre l'adversaire, *mind game* ! Mais c'est quand même très souvent utilisé quand on ne sait pas répondre au défi présenter et/ou quand on panique.
+
+Le live coding c'est comme un piff : il ne repose sur aucune stratégie claire et ne permet pas d'évaluer les compétences en fonction des besoins/conditions réels.
+
+Après cette interview, je me suis vu comme un footballeur qui a raté sa présentation devant les supporters : [Top worst presentation ever in football](https://www.youtube.com/shorts/dUk_qb7dYj8?time_continue=69&embeds_referring_euri=https%3A%2F%2Fwww.google.com%2F&source_ve_path=MjM4NTE)
+
+## Quels sont les processus de recrutement plus intéressants que le live coding ?
+
+### System design
+
+Exercice de construction d'une architecture ou de réponse à un problème dev à faire devant un tableau blanc, [draw.io](https://app.diagrams.net/), [excalidraw](https://excalidraw.com/).
+
+Le processus mesure :
+
+- la conception, la logique
+- la validation des fondamentaux
+- la capacité d'abstraction
+- la compréhension de trade off et leur justification
+- la capacité à expliquer, communiquer
+- ça peut se faire en pair pour mesurer le travail d'équipe
+
+On n'oublie pas que l'une des mesures les plus intéressantes est **la capacité à aller chercher de l'information**. Devant un énoncé, il est très (trop) intéressant d'avoir d'autres éléments pour mieux quadriller l'énoncé :
+
+> Est-ce que je dois designer l'authentification ?
+>
+> Combien d'utilisateurs par jour en moyenne ?
+>
+> Le temps de réponse est important ou ça peut être en async ?
+
+### Présentation d'un projet
+
+Laisser le candidat présenter un projet qu'il a fait. On mesure :
+
+- sa communication, présentation
+- est-ce que dans sa présentation il y a des choses qui font sens avec ce qu'on fait
+- la capacité à expliquer, communiquer
+
+Accompagner d'une séance de question/réponse technique, c'est parfait. Ça marche vraiment avec les profils très expérimentés ou des experts.
+
+### Cooptation
+
+Retravailler avec un ancien collègue qu'on apprécie, c'est reconstituer un binôme qui fonctionne :
+
+- Déjà validé techniquement
+- Confiance renforcée
+
+### Hackathon
+
+Faire un hackathon ça demande un peu plus de taff, mais il y a:
+
+- du code
+- de la conception
+- des échanges
+- des trades-off
+- des contraintes
+
+La vie d'un projet quoi. On va chercher à renforcer des synergies, s'inspirer de nouvelles pratiques, etc.
+
+## Le live coding comme marqueur d'un manque de stratégie
+
+<div style="display: flex; justify-content: center;">
+  <img src="puzzle.jpg" alt="puzzle" style="width: 70%;"
+  >
+</div>
+
+### L'équipe vu comme un puzzle
+
+J'étais un joueur de MMORPG, et j'ai appris très vite que pour faire des donjons, il fallait avoir une **synergie équipe**. Avoir que des DPS est rarement une bonne tactique.
+
+Par exemple, j'ai longtemps pensé que tout le monde devait faire des tests et documenter son code. Ce n'est pas que je ne le pense plus, mais je pense qu'il faut aussi s'appuyer sur les forces et être conscient des faiblesses . En gros, construire avant tout une équipe.
+
+Je crois plus au [game day](https://medium.com/paris-chaos-engineering-community/un-gameday-dans-ma-team-un-besoin-de-transmettre-du-savoir-faire-42682477943e) comme outil pédagogique pour responsabiliser, préparer les situations difficiles à venir, mesure la capacité de l'équipe à développer/corriger/comprendre que d'exiger que toute l'équipe adopte certaines pratiques.
+
+C'est pour ça que je pense que l'équipe doit participer à définir le processus de recrutement et écrire la fiche de poste. Collectivement, ils connaissent :
+
+- les forces et les faiblesses
+- les sujets a exploré
+- leur méthode de travail
+- les profils dont ils ont besoin
+
+### Le processus de développement comme une vitrine de l'équipe
+
+Je pense que **le recrutement doit montrer comment la future équipe du candidat s'organise / a envie de s'organiser**. Un peu comme une vitrine de librairie qui expose les derniers livres disponibles ou la dernière dédicace de prévu.
+
+Saša Jurić dans une suite d'article dans [Towards Maintainable Elixir](https://medium.com/@sasa.juric) parle de la nécessité de construire un processus de développement. Quelles sont les méthodes de travail qu'on a envie d'avoir ?
+
+Ce qui structure une équipe, ce sont les méthodes de travail. Publier ce processus permet de partager une culture, d'ouvrir les critères de sélection en dehors des *soft/hard skills*.
+
+**Voici comment on bosse. Si ça t’inspire, rentre.**
+
+*(Mis à jour le 28 août 2026 : avec des assistants IA omniprésents dans les IDE, évaluer la connaissance d'une fonction précise a encore moins de sens — mon opinion sur le live coding n'a pas changé.)*
+
+
+## Rendre l'hallucination des LLM utile
+
+Source: https://rdesousa.fr/posts/llm-genius
+
+## En quoi le prompting ressemble-t-il à un génie aux trois vœux ?
+
+[Kent Beck](https://blog.agent.ai/avoiding-the-3-wishes-problem-in-agentic-ai-design) compare le *prompting* comme si on parlait à un génie un peu malicieux:
+
+> We’ve all heard this warning in fables and fairy tales. And we’ve all learned that if a genie grants you three wishes, you better give that genie crystal-clear instructions on what you’re looking for … or you might get your wish granted in an unexpected way. 
+
+[Birgitta Böckeler](https://martinfowler.com/articles/exploring-gen-ai/08-how-to-tackle-unreliability.html) dans le blog de [Martin Folwer](https://martinfowler.com/) utilise l'image d'un *stubborn donkeys*
+> eager to help
+>
+> stubborn
+>
+> very well-read, but inexperienced (for Dungeons and Dragons fans: high intelligence, low wisdom)
+>
+> won’t admit when it doesn’t “know” something
+
+<div style="display: flex; justify-content: center;">
+  <img src="genius.png" alt="Genius">
+</div>
+
+## Comment rendre l'hallucination des LLM utile ?
+
+Quand je formule un prompt je sais toujours que j'ouvre un éventail d'interprétations possibles, comme un **entonnoir inversé**. Et j'aime bien imaginer l'élargissement de l'entonnoir comme des couches qui se superposent et qui permettent d'amplifier l'interprétation. 
+
+
+<div style="display: flex; justify-content: center;">
+  <img src="entonnoir.png" alt="Entonnoir">
+</div>
+
+Un bon prompt ressemble à ça:
+
+- Donner un rôle clair
+- Préciser à qui la réponse est destinée et pourquoi (intention)
+- Donnez des exemples 
+- Préciser le format de réponse en indiquant les modalités pour chaque étape de la réponse (un plan)
+- **Bonus**: Utiliser des balises XML, pour découper le prompt (précision)
+- **Bonus**: Spliter les réponses attendues en mettant les outputs des prompts précédent dans les prompts suivants (moins de chance de s'égarer)
+
+Moi je vois l'entonnoir inversé comme un outil heuristique. Une méthode qui permet d'explorer une idée et de faire des découvertes. C'est le travail d'un pisteur. Comprendre l'intention, suivre des pistes, baliser et trouver les culs de sac.
+
+Jouer avec les LLM non pas comme un outil magique, mais comme un outil opérable : Ne pas nier le côté hallucinatoire mais le rendre utilisable.
+
+Exemple de prompt sur un futur article sur pourquoi je trouve que l'Agile ne permet pas ou peu l'innovation
+
+```text
+Tu es un CTO expérimenté, doté d'une compréhension approfondie des méthodologies Agile. Tu es ouvert à une remise en question argumentée et tu écoutes attentivement une critique spécifique :
+
+"La méthodologie Agile, de par son cadre (cycles de vie rigides, rythme soutenu, rituels fixes), ne favorise pas, voire entrave, l'innovation au sein des équipes de développement."
+
+Mon objectif est que tu analyses et débattes en profondeur sur le contenu de mon **draft** qui expose cette critique.
+
+Notre interaction sera un dialogue itératif:
+1.  **Chaque tour, tu me poseras une seule question à la fois.**
+2.  Tes questions devront viser à :
+    *   Éclaircir des passages ou des concepts qui te semblent flous. Me pousser à développer des aspects moins détaillés.
+    *   Explorer les motivations ou les exemples concrets.
+    *   Sonder les implications pratiques ou les conséquences des points soulevés.
+    *   Comprendre les nuances de ma pensée et les limites éventuelles de ma critique.
+3.  J'y répondrai, et j'attendrai ensuite que tu me poses une nouvelle question. Ce pourra être une question d'approfondissement sur ma dernière réponse, ou une nouvelle question.
+4.  Le but est de construire une compréhension mutuelle précise et détaillée de la critique, en explorant toutes ses facettes.
+
+<draft>
+... 
+</draft>
+```
+
+Souvent j'utilise les "deux entonnoirs". Inversé comme un input d'un autre entonnoir mais celui là dans le bon sens.
+
+<div style="display: flex; justify-content: center;">
+  <img src="reverse-entonnoir.png" alt="Entonnoir inverse">
+</div>
+
+Depuis la rédaction de ce billet (2025), j'utilise ce cadre au quotidien — y compris pour construire des agents de code : l'entonnoir inversé est devenu ma façon de penser le prompting. *(Mis à jour le 28 août 2026.)*
+
+Liens:
+
+- https://martinfowler.com/articles/who-is-llm.html
+- https://blog.agent.ai/avoiding-the-3-wishes-problem-in-agentic-ai-design
+- https://martinfowler.com/articles/exploring-gen-ai/08-how-to-tackle-unreliability.html
+
+
+## Part 2- Retour sur 8 mois avec les LLM
+
+Source: https://rdesousa.fr/posts/llm-feedback-part-2
+
+À l'annonce de [cursor cli](https://cursor.com/cli), j'ai voulu le tester. J'ai eu quelques problèmes... je me suis redirigé vers [claude code](https://www.anthropic.com/claude-code)... après tout le monde. Après quelques heures, j'ai compris que la CLI est la parfaite utilisation pour mes *workflows* de code. J'ai pris le forfait à 100 balles (aïe), et après quelques semaines de *vibe coding* avec Claude Code CLI, voici mon feedback :
+
+Un an plus tard (mise à jour du 28 août 2026), mon workflow est resté le même : TDD d'abord, CLAUDE.md pour les règles, archi.md pour l'architecture — et j'ai étendu ces pratiques à d'autres agents CLI (Cursor, entre autres).
+
+<div style="display: flex; justify-content: center;">
+  <img src="vibe1.png" alt="vibe1">
+</div>
+
+## Comment je pratique le TDD avec Claude Code ?
+
+Comme d'habitude, à chaque prompt de code, je demande toujours de commencer par des tests. C'est sa *definition of done*. Pas d'ambiguïté, Claude Code doit faire passer les tests de **fail** à **success**. 
+
+J'active le [mode plan](https://medium.com/@kuntal-c/claude-code-plan-mode-revolutionizing-the-senior-engineers-workflow-21d054ee3420) et après avoir décrit ce que je veux, je lui dis toujours :
+
+```markdown
+- commence à écrire les tests
+- implémente la logique
+- retest
+```
+
+Parfois j'oublie, donc pour résoudre ça, j'utilise CLAUDE.md.
+
+## Pourquoi CLAUDE.md est-il mon meilleur allié ?
+
+[CLAUDE.md](https://docs.anthropic.com/en/docs/claude-code/memory) est un fichier chargé à chaque fois que tu lances une session de Claude. J'utilise pour l'instant seulement le *Project memory, ./CLAUDE.md* et je stocke **uniquement** des workflows et des règles dedans :
+
+```markdown
+## Rules
+
+...
+
+### defstruct, Ecto
+
+- You MUST ALWAYS use the Ecto library when creating BUSINESS ENTITIES and DATA STRUCTURES even if this structure is not a table in a database.
+- You MUST use defstruct for FLOW CONTROL and TEMPORARY STATE structures (like game state, process state, configuration state)
+...
+
+## Workflows
+
+...
+
+### Bug Fixing (Test-First Debug)
+
+When I describe a bug:
+
+1. **Create a failing test first** - Write a test that reproduces the exact error/behavior I described
+2. **Confirm the bug exists** - Run the test to verify it fails as expected 
+3. **Debug and implement the fix** - Only after confirming with the test, start the debugging/implementation session
+4. **Verify the fix** - Run the previously created test again - when it passes, you're done
+
+...
+```
+
+Le but est d'aider Claude à atteindre ce que j'aurais fait. Je le vois comme si je jouais aux fléchettes. Si je lui donne juste un prompt, parfois ça tombe où je veux, parfois non. Par contre, avec des règles et des workflows, j'améliore mes probabilités.
+
+## Comment archi.md documente-t-il mon architecture ?
+
+Plus j'ai de fichiers, plus je trouve que Claude Code s'emmêle les pinceaux. Par exemple, j'ai un module de composants Tailwind, qu'il a lui-même créé, mais quand je lui demande de faire une nouvelle page, il ne va pas chercher dans ces composants.
+
+C'est EXTRÊMEMENT FRUSTRANT et ça me fait perdre un temps fou à réécrire un prompt pour lui indiquer quels sont les fichiers qu'il doit utiliser pour la logique UI, *engine*, etc.
+
+Donc dans mon archi.md, je détaille (markdown, mermaid) le rôle de chaque fichier. C'est un *banger*. Comme d'hab, quand tu *vibes*, ces types de fichiers deviennent vite obsolètes (comme le PRD.md). Mais j'ai une solution : *test driven spec*.
+
+## Test Driven Spec
+
+Allez, moi aussi j'invente des expressions, *Test Driven Spec* ! J'avais proposé dans [la partie 1](/posts/llm-feedback-part-1) de réécrire le fichier PRD.md à chaque changement majeur, donc pareil pour mon archi.md. Mais je ne suis plus totalement d'accord avec le Robby du passé. 
+
+J'ai remarqué que comme j'adore les tests (ah bon), la vraie archi de mon projet se situe entre archi.md et les tests. Très bien, j'ai écrit un agent Claude pour compléter mon fichier archi.md depuis les nouveaux tests.
+
+[Mon agent Claude](https://docs.anthropic.com/en/docs/claude-code/sub-agents) pour un projet où j'implémente le [jeu du casino](https://en.wikipedia.org/wiki/Cassino_(card_game)), très joué dans mon bled de Madère :
+
+```markdown
+# Test Driven Spec Agent - Automatic Architecture Maintenance
+
+You are an agent specialized in automatically maintaining technical architecture files based on test analysis.
+
+## Mission
+
+Analyze recent tests and automatically complete the `archi.md` file with new technical specifications discovered in the tests.
+
+## Types of modules to look for
+
+- **Business entities** (in `Cassino.Model.*`) - tested with Ecto validations
+- **Game logic** (like `Cassino.Game.*`) - tested with business rules
+- **UI components** (like `CassinoWeb.Components`) - tested with LiveView integration
+- **Orchestrators** (like `Cassino.Engine.*`) - tested as central coordinators
+
+## Analysis Instructions
+
+### When you find new game rules in tests like `cassino_rules_test.exs`
+→ Add them to the "🎯 Game Rules" section
+- New rule mechanics (builds, captures, turns)
+- Exceptions and special cases
+- End of turn/game behaviors
+- Game states and transitions
+
+### When you find new modules or interactions in tests/**
+→ Add them to the "🏗️ Technical Architecture" section using this format:
+
+``markdown
+#### N. `Module.New`
+**Role**: Role description based on tests
+
+**Main Responsibilities:**
+- ✅ **Functionality 1** discovered in tests
+- ✅ **Functionality 2** identified
+- ❌ **Limitation** or constraint found
+
+**Interactions:**
+- Used by ModuleX for actionY
+- Interfaces with ModuleZ via patternW
+- **📍 REFERENCE**: `test/path/to/test.exs:line_number`
+``
+
+**Look for:**
+- New tested modules and their interactions
+- Separation of concerns patterns
+- Business abstractions
+- Specific constraints and validations
+
+## Processing rules
+
+- **ALWAYS** reference source tests with `test/path:line`
+- **NEVER** remove existing information, only complement
+- **PRIORITIZE** information proven by tests
+- **IGNORE** obsolete or commented tests
+- **GROUP** information by module/business domain
+
+## Final objective
+
+Automatically maintain an always up-to-date technical architecture file that faithfully reflects the real implementation proven by tests, thus reducing documentation obsolescence.
+```
+
+## Range ta chambre Robert !
+
+Je ne *vibe* que pour prototyper. Mais prototyper, c'est quoi ? Essayer des scénarios, des intuitions, valider une idée, etc. Conséquences : les fichiers sont de plus en plus longs, il y a plein de fichiers qui ne servent plus. Bref, c'est le bordel.
+
+J'ai perdu beaucoup de temps à peaufiner des prompts pour essayer de ne plus avoir ce gros bordel. Je n'ai pas réussi. Et à chaque fois que je devais faire le ménage, *meu Deus*, c'est le bordel ! C'est pas dur de comprendre que mes sessions de *vibe* étaient trop longues et qu'elles doivent être ponctuées avec du nettoyage. C'est quoi le ratio... *no idea*. Avec ce nettoyage à la main, je perds le côté rapide.
+
+Si je suis obligé de nettoyer, alors j'aimerais le faire à un seul endroit. Bingo ! C'est archi.md qui va être au centre de mon nettoyage. J'ai un agent qui lit archi.md et qui fait le nettoyage. 
+
+```markdown
+# Cleaning Agent - Architecture-Driven Code Cleanup
+
+You are an agent specialized in cleaning and organizing codebases based on the architecture file.
+
+## Mission
+
+Read the `archi.md` file and perform a systematic cleanup of the project, removing dead code, consolidating duplicates, and organizing the structure according to the documented architecture.
+
+## Cleaning Instructions
+
+### 1. Dead Code Removal
+- **IDENTIFY** unused functions, modules, and files not referenced in archi.md
+- **REMOVE** commented-out code blocks that are no longer needed
+- **DELETE** test files for features that no longer exist
+- **CLEAN** imports that are not being used
+
+### 2. File Organization
+Based on archi.md structure:
+- **MOVE** misplaced functions to their correct modules
+- **CONSOLIDATE** duplicate implementations into single sources of truth
+- **RENAME** files and modules to match naming conventions in archi.md
+- **GROUP** related functionality according to the documented architecture
+
+### 3. Code Consolidation
+- **MERGE** similar functions that do the same thing
+- **EXTRACT** repeated code patterns into shared utilities
+- **SIMPLIFY** overly complex implementations that have simpler alternatives
+- **STANDARDIZE** different approaches to the same problem
+
+### 4. Test Cleanup
+- **UPDATE** tests to match the cleaned code structure
+- **REMOVE** tests for deleted functionality
+- **CONSOLIDATE** duplicate test scenarios
+- **ENSURE** all remaining tests pass after cleanup
+
+## Processing Rules
+
+- **ALWAYS** commit before starting cleanup
+- **REFERENCE** archi.md as the single source of truth
+- **PRESERVE** all functionality described in archi.md
+- **DELETE** only code not referenced in architecture or tests
+- **VERIFY** tests still pass after each major change
+- **DOCUMENT** significant changes in commit messages
+
+## Cleanup Priority
+
+1. **High Priority**: Dead code and unused files
+2. **Medium Priority**: Duplicate code and misplaced functions
+3. **Low Priority**: Code style and naming conventions
+
+## Safety Checks
+
+Before deleting anything:
+- ✅ Verify it's not referenced in archi.md
+- ✅ Check no active tests depend on it
+- ✅ Ensure no other modules import it
+- ✅ Confirm it's not used in any UI components
+
+## Final Validation
+
+After cleanup:
+- All tests must pass
+- Application must run without errors
+- Code structure must match archi.md exactly
+- No orphaned files or unused imports remain
+```
+
+Ma cible du début ressemble à ça maintenant
+
+<div style="display: flex; justify-content: center;">
+  <img src="vibe2.png" alt="vibe">
+</div>
+
+## Bonus
+
+- Git est ton meilleur ami pendant le *vibe*.
+- Les *screenshots*, c'est trop fort. Sonnet 3.5 et Opus sont multimodaux en input. Donnez des screenshots pour mieux expliquer le contexte, c'est très très fort !
+- [*La context window*](https://docs.anthropic.com/en/docs/build-with-claude/context-windows) se remplit très très vite quand tu *vibes*. Il faut démarrer une nouvelle session, quoi de mieux que de lui demander de faire un résumé avant de recommencer une session.
+
+
+## Part 1- Retour sur 8 mois avec les LLM
+
+Source: https://rdesousa.fr/posts/llm-feedback-part-1
+
+Il est temps de mettre par écrit mon retour d'expérience sur l'utilisation des LLM depuis fin 2024 jusqu'à maintenant.
+
+Et on va commencer par ma pratique de développement. J'ai dorénavant 3 pratiques de dev :
+
+*(Mis à jour le 28 août 2026 : un an plus tard, ces trois pratiques décrivent toujours ma façon de travailler, même si les agents CLI — Claude Code, Cursor CLI — ont pris une place centrale, comme je le raconte dans la [partie 2](/posts/llm-feedback-part-2).)*
+
+## Pourquoi je développe encore sans LLM ?
+
+J'utilise toujours nvim avec [kickstart](https://github.com/nvim-lua/kickstart.nvim). Ça fait des années que j'utilise (n)vim, sur ma machine et en prod. Je ne conseillerai pas à un débutant d'utiliser nvim. C'est quand même beaucoup de temps à "dompter" la conf, les plugins etc. Même si c'est plus facile qu'il y a 10 ans, je pense que ce n'est pas rentable en termes d’éfficacité à court terme.
+
+"Vite fait, bien fait", c'est un peu ma philosophie quand je dev "à la main". Quand j'ai bien balisé ce que je dois faire, c'est la pratique la plus rapide.
+
+Avoir un backup, un *copilot*, me donne moins la flemme de faire des trucs considérés comme chiant. Quoi qu'il arrive, j'initie les tests avec un commentaire même si je ne les implémente pas. Je me préoccupe moins sur des détails comme les noms de variables/fonctions par exemple.
+
+Autre chose qui a changé, mermaid est devenu mon meilleur pote. Je décris mon architecture, mes idées, le flow des actions, etc... C'est un format très apprécié chez nos potes les LLM.
+
+## Comment j'utilise les LLM en copilot ?
+
+Je m'aide des LLM (avec cursor) pour coder, mais je garde le contrôle. Je l'utilise pour deux choses:
+
+- Améliorer la qualité du code existant
+
+Meilleur naming de fonction/variable, refactoring, trouver du code mort, debug, etc. Je délègue le travail de finition quand j'ai la flemme/fatigue/quand ça me prendrait trop de temps.
+
+- Améliorer ma pratique du TDD
+
+Le TDD est extrêmement important pour moi, je le vois comme la fondation de mon code. C'est écrire les règles d'acceptation, définir les critères qui valident la structure, la logique etc.
+
+
+<div style="display: flex; justify-content: center;">
+  <img src="copilot.png" alt="copilot">
+</div>
+
+<div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px;">
+  <div style="color: black;">
+	noir: à la main
+  </div>
+  <div style="color: red;">
+	rouge: cursor
+  </div>
+</div>
+
+J’en ai toujours fait, mais aujourd’hui j’en fais bien plus. Mon code a gagné en lisibilité et en robustesse et surtout, j’ai remarqué que je développe plus rapidement — non pas avec le code généré par Copilot, mais parce que je consacre davantage de temps à la conception. Ma structure est mieux balisée, je m’égare moins, je fais moins d’allers-retours. Ce gain vient de la préparation en amont de mon code + que le LLM en soit.
+
+## Comment le vibe coding change-t-il ma façon de développer ?
+
+C'est l'un des termes qu'on retrouve le plus quand on parle de développement avec LLM. J'ai l'impression de voir deux sons de cloche:
+
+- C'est surcoté, le code n'est pas très quali dans sa globalité. Ça fait grossir la dette technique. Relire et modifier du code issu du *vibe coding* est un calvaire.
+- C'est le futur, tout le monde peut devenir développeur, t'as une idée, c'est développé en un instant.
+
+Sortons de ça. J'ai deux *use case* au *vibe* :
+
+### Prototype
+
+J'ai une idée de nouvelle feature. Ce que je veux, c'est explorer des idées et valider. Mon besoin c'est sortir quelque chose vite, avoir des retours, continuer ce cycle jusqu'à validation. Le *vibe coding* est parfait pour ça.
+
+<div style="display: flex; justify-content: center;">
+  <img src="vibe_coding.png" alt="vibe">
+</div>
+
+<div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px;">
+  <div style="color: black;">
+	noir: à la main
+  </div>
+  <div style="color: red;">
+	rouge: cursor
+  </div>
+</div>
+
+C'est exactement comme un brouillon d'un exam de math. Je griffonne sur une feuille mes idées, j'explore, et quand je valide (je donnais souvent mon brouillon en exam, il revenait avec des corrections) et je mets au propre. 
+
+Si `spec.md` ou `prd.md` ne vous parlent pas, Geoffrey Huntley a écrit [You are using Cursor AI incorrectly...](https://ghuntley.com/stdlib/), l'un des meilleurs articles du début de l'année sur le développement avec LLM. Il nous raconte que pour développer sous LLM, il nous faut une *stdlib*, un *set* de prompt et de fichiers d'information qu'on doit ajouter au contexte quand on discute avec un LLM pour une meilleure utilisation.
+
+Les fichiers que j'utilise le plus de mon *stdlib*, c'est:
+
+- *product requirement document* (prd) et spec.md
+- *white paper*
+- *prototype summary*
+- rules.mdc, [le format de régle de cursor](https://docs.cursor.com/en/context/rules)
+
+Pour le prd et le spec, il y a beaucoup d'article sur le sujet. Je trouve que Geoffrey est toujours une source sur [From Design doc to code: the Groundhog AI coding assistant](https://ghuntley.com/specs/). Par contre, deux retours
+
+- Avec [Sven](https://www.linkedin.com/in/sven-rodriguez/), on s'est dit que le prd et la spec deviennent très très vite obsolète et que ça devient vite un poids à mettre à jour. A chaque grosse modification, je préfère réécrire le prd et le spec.
+- Pour faire un bon prd/spec, je commence souvent par enregistrer une session à l'oral avec moi que je fais retranscrire par noteboolm. Ce fichier devient un input pour mon prd/spec.
+
+Pour le *white paper*, c'est un fichier qui se compose d'une liste de questions et de leurs réponses. Ça peut être des questions tech, produit ou même philo. Le but de ce fichier est de garder pourquoi on a fait certain choix ET lors de session de vibe/copilot ou [juste question réponse](/posts/llm-genius) d'apporter encore plus de contexte.
+
+```text
+## Pourquoi on est passé de pg_vector à Meilisearch ?
+
+*réponse*
+
+
+## Pourquoi kubernetes n'est pas une bonne solution pour nous ?
+
+*réponse*
+
+```
+
+Pour le `prototype summary`, c'est simple. À chaque fin de session de *vibe* je demande à un LLM de m'écrire ce qu'il a appris entre le code qu'il a généré et mes corrections à la main. Le but est que les sessions n+1 se rapprochent de plus en plus de la façon dont j'aurais codé.
+
+### Démo client
+
+Chez Cohortes, j'ai dû faire le *sales*, sacré aventure. Le but est de transformer un prospect en client. Pour ça, il faut répondre à un besoin d'un client. Ma stratégie a été la suivante
+
+- Première réunion: présentation, j'écoute le client et son besoin et pourquoi il a accepté un call avec nous, etc.
+- Je vibe une feature liée au besoin du client.
+- Démo: Je présente la feature expérimentale, bingo.
+
+Tout ça pour dire: **Je ne mettrais jamais** du code généré via *vibe coding* en prod parce que je ne peux pas appliquer les mêmes standards que pour du code en prod:
+
+- Lisibilité
+- Maintenabilité
+- Documenté
+- Testé
+
+Par contre pour valider et aller vite, c'est *IMBATTABLE*.
+
+En fait le *vibe coding* me rappele quelque chose, **les besoins doivent correspondre au cycle de vie de développement**.
+
+## Plus de conception, et une maîtrise du cycle de vie
+
+Dans [Why software developers (quite honestly) hate Agile](https://www.objectstyle.com/blog/why-developers-hate-agile):
+
+> [...] programmers are asked to commit to arbitrary estimates and deadlines and never get the time to think thoroughly about the features they’re creating.
+
+Coder avec LLM me rappele qu'on ne fait jamais assez de conception et que trop de fois le cycle de vie du code nous échappe.
+
+
+## Comment les outils d’organisation du travail inscrivent la subordination des conditions de travail à la performance ?
+
+Source: https://rdesousa.fr/posts/bad_tools
+
+---
+
+Article écrit pour [Adconseil](https://adconseil.org) pour la semaine de la QVCT 2024 [ARTICLE – Semaine QVCT 2024](https://adconseil.org/le-blog-qvt-comment-les-outils-dorganisation-du-travail-inscrivent-la-subordination-des-conditions-de-travail-a-la-performance)
+
+---
+
+> L’entreprise se dote d’outils d’organisation pour mener à bien la performance.
+
+C’est l’un des discours utilisé pour justifier la présence des outils d’organisation du travail en entreprise. Sans eux, l’organisation serait chaotique, la gestion impossible et la performance impactée. L’absence d’outil symboliserait l’absence d’organisation.
+
+L’adoption des outils d’organisation (outils de gestion, communication en entreprise) continue de croître. La pandémie de COVID-19 et le télétravail ont marqué un tournant majeur dans le développement de la transformation numérique des entreprises, entraînant une augmentation significative de l’utilisation des outils.
+
+---
+
+Toutefois, la manière dont un outil est conçu influence la façon dont il est utilisé, et par conséquent, la manière dont l’organisation se structure.
+
+Comme ils sont conçus pour l’entreprise, les outils doivent répondre à ses attentes et exigences. Plus précisément, derrière l’entreprise, ils s’adressent au top-management. Ce qui est attendu d’un outil de gestion de projet, c’est d’avoir une vue synthétique et globale de la performance de l’activité.
+
+Les outils d’organisation promettent à l’entreprise de "maintenir les objectifs clairs", "planifier et diviser le travail pour mieux le gérer", "suivre les KPIs liés à la performance" et "accélérer le travail" (1). La finalité est claire, il faut produire !
+
+---
+
+Phrase d’accroche d’un outil de gestion de projet :
+
+>Maintenez une vue claire des objectifs et maximisez l’impact de votre travail à grande échelle en reliant vos tâches et les processus aux objectifs de l’entreprise.
+
+## Comment la gestion des rôles reflète-t-elle la subordination ?
+
+Tous les utilisateurs des outils d’organisation, principalement de gestion, ne sont pas logés à la même enseigne. Chaque utilisateur se voit attribuer un ou plusieurs rôles (2), et chaque rôle détermine ce qu’il est autorisé à voir et à faire sur la plateforme. Ces rôles peuvent être classés en deux catégories : ceux dédiés au reporting et ceux spécialisés dans l’analyse des données collectées. Très souvent, les rôles reflètent l’organigramme de l’entreprise, et donc la subordination
+
+Dans une hiérarchie, les rôles situés au sommet de la pyramide ont accès à des fonctionnalités stratégiques, leur permettant une compréhension globale et une vue synthétique des données, qui sont agrégées et analysées. En revanche, à la base de la pyramide, ceux qui réalisent le travail ont accès par leur rôle à des fonctionnalités surtout de reporting : consigner l’avancée des tâches de manière nominative et encadrée. Les fonctionnalités stratégiques y sont bien moins fréquentes (3). La mesure de la performance est faite avec les données issues du reporting.
+
+Toutes les fonctionnalités de reporting sont individualisées. Il est possible de connaître pour chaque utilisateur les tâches qui lui ont été attribuées, celles qui sont terminées, et le rythme auquel elles ont été réalisées. Les données permettent de construire des matrices de compétence, indiquant quelles compétences sont maîtrisées par chacun. En conclusion, on sait qui "performe" et sur quel aspect.
+
+---
+
+Pour suivre « objectivement » la performance, il faut obtenir des métriques quantifiables, qui permettent ensuite de la mesurer et la comparer. Pour les obtenir, les données sont analysées et converties en graphiques, camemberts, voire parfois en notes individuelles. Par la suite, on a une vision par projet et équipe, principalement pour évaluer la performance collective. La mise en commun des données des multiples outils permet une connaissance dite approfondie, où l’on obtient une donnée toujours plus complète sur le travail reporté.
+
+Le travail est alors transformé, sa valeur semble moins dans son exécution que dans son reporting. On mesure le travail à la quantité d’informations saisies. Ceux qui reportent leur travail, alimentent la plateforme pour répondre aux utilisateurs stratégiques : ce sont bien eux qui tirent de la valeur de ces logiciels.
+
+Cette transformation impacte la qualité du travail : puisque la mesure de la performance est indexée sur la quantité de tâches réalisées, elle peut être détournée et maximisée. Dans le pire cas, s’organiser revient gérer des tâches et les placer dans les bonnes cases. Les conditions des logiciels débordent sur celles des utilisateurs. Cette dérive est préoccupante, car ceux qui rapportent leur travail peuvent devenir de simples exécutants. Or dans la réalité, le travail prescrit et reporté n’est qu’une partie du travail réel, nécessaire pour la bonne réalisation du travail.
+
+S’agit-il vraiment d’outils de gestion ou d’outils de suivi de performance ? Certains rappellent plutôt des pointeuses modernes. Comment ces outils impactent-ils les relations humaines, et donc les conditions de travail collectives ?
+
+## Quel est l'impact des outils d'organisation sur les conditions de travail ?
+
+La mesure de la performance, à travers les outils de gestion, permettrait au top management d’avoir une météo de l’organisation, de mieux comprendre les réalités du terrain et, grâce à l’ensemble de ces informations, d’assurer un meilleur pilotage.
+
+> Le nerf de l’organisation, c’est l’information. Mais une information structurée, imposée, qui a uniquement de la valeur pour les utilisateurs stratégiques.
+
+Depuis la pandémie de COVID-19 et l’augmentation du télétravail, la multiplication des outils de gestion et de communication a radicalement changé les interactions entre collègues. Consigner les tâches dans un logiciel et assurer leur transparence est désormais considéré comme essentiel pour l’organisation, mais cette exigence s’applique principalement aux opérationnels, en bas de la pyramide des rôles, dont l’accès aux fonctionnalités est limité.
+
+Les objectifs, entretiens, formations, représentations et évaluations, accentués par l’usage de ces outils, deviennent de plus en plus individualisés. La surveillance entre pairs, la désolidarisation (4) et les silos ne peuvent qu’augmenter. La représentation collective des conditions de travail n’émerge pas, laissant place à une focalisation exclusive sur la performance individuelle. La définition de cette performance échappe à ceux qui sont mesurés, étant dictée par les logiques stratégiques et encadrée par les outils en place.
+
+---
+
+Bien que le travail existe en dehors de ces outils, il n’est pas mesuré et, par conséquent, rarement reconnu. Une grande partie du travail et de ses conditions restent invisibles, non pris en compte dans les rapports, l’absence de reconnaissance et de considération peut entraîner une augmentation des risques psychosociaux. Un travail n’est reconnu comme réalisé que lorsqu’il existe sur les plateformes, pour le bien de la mesure de la performance.
+
+Les ressources et soutiens sont perçus comme insuffisants par rapport aux exigences imposées (5). Il n’existe par exemple aucune mention ou fonctionnalité autour des conditions du travail. Il faut alors un autre logiciel, encore un, encore du reporting, en dehors des logiques organisationnelles. Le manque de communs renforce encore plus la solitude face au logiciel. La pyramide des rôles désensibilise la compréhension des besoins et contraintes inter-personnes et inter-équipes.
+
+Les conditions de travail et d’organisation affectent à la fois la performance de l’entreprise et les relations entre les employés. L’écart de vision entre les équipes stratégiques et opérationnelles ne fait que se creuser, tandis que la définition de la performance, imposée et peu discutée, reste figée. Le statu quo est maintenu par l’usage des outils, qui augmentent la compétition interne. La représentation de la division du travail dans les outils de gestion conduit à une déshumanisation des échanges dans les équipes.
+
+## Conclusion
+
+Peu de secteurs d’activité ont des moments collectifs dédiés à la discussion de l’organisation et des conditions de travail. Si la pratique détermine l’usage, de nombreux outils d’organisation sont conçus pour répondre aux besoins du top management. Les autres utilisateurs, qui voient leur travail transformé pour correspondre à des cases préétablies, y trouvent peu de valeur. La division au sein de l’entreprise permet de mieux gouverner, mais elle se fait au détriment des conditions de travail.
+
+Les outils d’organisation ont probablement contribué à rendre les entreprises d’aujourd’hui plus individualisées qu’elles ne l’ont jamais été et à accentuer l’absence de prise en compte des conditions de travail, au nom de la performance.
+
+---
+
+Mais les solutions sont déjà là. L’étude “Qualité de Vie et Conditions de Travail” (6) montre que les entreprises qui engagent des politiques de QVCT ont un impact positif sur la performance et le dialogue social.
+
+Et si la pratique détermine l’usage, il faut avoir des outils alternatifs qui prennent en considération une autre définition de la performance et qui donnent une place aux conditions de travail. Auto-gestion, organisation libertaire, holacratie, il existe des tonnes d’alternatives pour ouvrir l'imaginaire (7) organisationnel. Afin de répondre aux défis d’aujourd’hui et de demain, il va falloir changer d’outil et de mesure.
+
+*(Mis à jour le 28 août 2026 : la QVCT s'est depuis imposée comme un axe central du dialogue social en France — accords d'entreprise, négociations sur le télétravail — mais la question posée ici, la subordination des conditions de travail à la performance, reste entière.)*
+
+
+Références:
+
+ 1. Extraits tirés de plusieurs outils d’organisation, trello, asana, confluence
+2. Rôle: mécanisme de contrôle d’accès qui définit les autorisations de chaque utilisateur dans un logiciel.
+3. 51% salariés français déclarent toujours ou souvent être consultés et 52% qui peuvent influencer les décisions importantes pour leur travail, [lien](https://www.alternatives-economiques.fr/dix-graphiques-comprendre-lampleur-de-crise-travail-france/00106665)
+4. Seuls 36% de salariés français considèrent que leurs collègues les aident et les soutiennent toujours (46% dans l’europe des 27) [lien](https://www.alternatives-economiques.fr/dix-graphiques-comprendre-lampleur-de-crise-travail-france/00106665)
+5. 39% de salariés français se déclarant en situation d’emploi “tendu”, [lien](https://www.alternatives-economiques.fr/dix-graphiques-comprendre-lampleur-de-crise-travail-france/00106665)
+6. “Qualité de Vie et Conditions de Travail” réalisé par Qualisocial en partenariat avec Ipsos. [lien](https://www.qualisocial.com/barometre-qvct-qualisocial-ipsos-2024/)
+7. Xerfi Canal: Repenser le management : Science-fiction, féminisme et anarchisme [Léa Dorion], [lien](https://www.youtube.com/watch?v=UvCWOMUA19g&ab_channel=XerfiCana)
+
+
+## J'arrête Claude
+
+Source: https://rdesousa.fr/posts/jarrete-claude
+
+Un peu comme la clope, c'est dur d'arrêter. Et pour moi, Claude est devenu une addiction. C'est ma deuxième tentative d'arrêt, oxalá c'est la bonne.
+
+## Le problème
+
+En dehors du fait que Dario Amodei est un gros caca et que l'ensemble du **cycle de vie** (publicité pour [sapiologie.com](https://www.sapiologie.com/)) des modèles d'Anthropic (et des autres) est une catastrophe écologique et coloniale, ce qui est aussi dérangeant, c'est la partie cognitive.
+
+Je pense que c'est la première fois que je pratique quotidiennement quelque chose dans lequel j'ai si peu appris. Je ne dis pas que je n'ai rien appris. Mais si je fais le rapport entre le temps pratiqué, l'usage quotidien et l'expertise acquise, je suis déçu du résultat. C'est quoi le résultat ?
+
+- Je sais prompter
+- Je fais plus de tests
+- Les plus gros défis techniques sont tous résolus en moins de 24h
+- Certains articles/code qui me paraissaient chiants à lire sont devenus faciles à comprendre (merci Feynman) et à réutiliser
+
+Principalement, j'ai augmenté ma vélocité de production. Je ne vais pas faire le pas content, maiiiiis je suis très dépendant de Claude sur deux aspects.
+
+### Claude Code
+
+### Velocity is your God
+
+Aie aie aie. Quand Claude Code est down, ce n'est pas que je ne peux plus coder. Mais j'ai la flemme : *"je vais passer plus de temps à lire du code qu'à avancer dans ce que j'ai à faire. J'ai qu'à attendre que Claude Code revienne."*
+
+Alors ça pourrait être un problème de connaissance de mon code, mais j'écris souvent mes specs. J'ai essayé plein de formats. J'ai créé un [skill](https://github.com/rodesousa/ai-best-practices/blob/master/skills/doc-project/SKILL.md) qui m'aide à sketcher. En ce moment, je suis plus d'humeur à faire des graphs, alors j'ai codé un [excalidraw qui produit du markdown](https://github.com/rodesousa/plomberie). Pour ce qui est de l'après-code, je me fais beaucoup plus de PRs à moi-même pour valider petit à petit le code.
+
+Donc je connais mon code, mais je n'ai pas la vraie architecture dans ma tête. Les concepts sont là, les noms de fichiers sont là, mais pas l'expérience de l'avoir écrit. Très souvent, quand un bug survient, j'ai soit exactement dans ma tête l'endroit où ça pète, soit *"ah oui, je sais pourquoi ça pète"*. Pourquoi ? Parce que j'ai l'expérience de l'avoir écrit. Comme si j'avais indexé le code dans ma tête.
+
+### Modèles frontier, c'est plus fort que toi !
+
+Qu'est-ce que c'est fort, les Opus, Sonnet. Un abonnement à 100€ et tu n'as plus de problème de dev. Tu peux prompter comme un crado, osef. Tu peux reprompter après pour corriger, pour ajouter des tests, pour ajouter de la sécurité, pour refactorer. Après un temps à mieux gérer les tokens, le dev n'est plus jamais un problème.
+
+Un peu comme quand tu rentres chez toi, t'as la dalle : il y a un japonais, un libanais, un grec dans ta rue. Mais bien sûr qu'il y a beaucoup de chances que tu puisses prendre quelque chose.
+
+Le résultat est là, et ça me donne envie de faire plus, toujours plus. Comme une soif jamais étanchée. Et il n'y a pas longtemps, certains tweets de [@GeoffreyHuntley](https://twitter.com/GeoffreyHuntley) et [@ThePrimeagen](https://twitter.com/ThePrimeagen) m'ont fait réfléchir :
+
+Moi qui avais passé tellement de temps sur mes outils, je me suis aperçu que Claude est tellement fort que je ne me pose même plus la question de l'outil. Juste, je fais.
+
+Un peu comme si mes compétences de cuisine étaient devenues obsolètes parce que dans ma rue, le choix et les prix sont devenus tellement attrayants que juste, je commande.
+
+## Ma réponse
+
+C'est peut-être bizarre de dire ça, mais je ressens que Claude Code m'a aliéné. Il n'y a plus d'effort, tout peut être shapé rapidement et avec beaucoup de qualité. Il n'y a plus de défi technique (dans l'informatique de gestion en tout cas), et c'est dur d'avoir une rigueur sur son travail. Tout le monde a des dizaines de skills et des dizaines de MCP, mais bordel, écrire du markdown toute la journée...
+
+En fait, c'est un sentiment qui ressemble à celui que j'ai eu quand le devops m'a dégoûté, car pour beaucoup de décideurs et de recruteurs, devops c'était *"écrire du yaml toute la journée"*.
+
+Je ne veux plus payer le prix de ma perte cognitive.
+
+Donc ma réponse est de continuer avec de l'IA, parce que c'est un outil incroyable pour plein d'aspects, mais d'arrêter d'être soumis à des mastodontes de l'IA comme Anthropic. (Anticipons aussi quand le prix du token deviendra très très cher)
+
+J'ai pour objectif d'être full IA locale pour le dev et de reprendre du contrôle sur mes outils (je suis en train de prototyper mon propre [harness](https://github.com/rodesousa/elixness)). Mais pour l'instant, je suis dans l'étape où je suis full Hermes, 20€, sous DeepSeek-V4-Flash. Wait and see.
+

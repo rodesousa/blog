@@ -2,10 +2,10 @@
 weight: 1
 title: "Rendre l'hallucination des LLM utile"
 date: 2025-07-23T15:34:40+08:00
-lastmod: 2025-07-23T15:34:40+08:00
+lastmod: 2026-08-28T09:00:00+02:00
 draft: false
 author: "Roberto"
-description: "LLM is a genius — Be careful what you wish for"
+description: "Pourquoi l'hallucination des LLM n'est pas un défaut : le prompting comme entonnoir inversé, et comment rendre l'hallucination exploitable plutôt que de la nier."
 images: []
 resources: 
 - name: "featured-image"
@@ -16,7 +16,7 @@ categories: ["AI"]
 lightgallery: true
 ---
 
-## Tu as droit à trois vœux
+## En quoi le prompting ressemble-t-il à un génie aux trois vœux ?
 
 [Kent Beck](https://blog.agent.ai/avoiding-the-3-wishes-problem-in-agentic-ai-design) compare le *prompting* comme si on parlait à un génie un peu malicieux:
 
@@ -35,7 +35,7 @@ lightgallery: true
   <img src="genius.png" alt="Genius">
 </div>
 
-## Essayons de profiter de ça
+## Comment rendre l'hallucination des LLM utile ?
 
 Quand je formule un prompt je sais toujours que j'ouvre un éventail d'interprétations possibles, comme un **entonnoir inversé**. Et j'aime bien imaginer l'élargissement de l'entonnoir comme des couches qui se superposent et qui permettent d'amplifier l'interprétation. 
 
@@ -86,6 +86,8 @@ Souvent j'utilise les "deux entonnoirs". Inversé comme un input d'un autre ento
 <div style="display: flex; justify-content: center;">
   <img src="reverse-entonnoir.png" alt="Entonnoir inverse">
 </div>
+
+Depuis la rédaction de ce billet (2025), j'utilise ce cadre au quotidien — y compris pour construire des agents de code : l'entonnoir inversé est devenu ma façon de penser le prompting. *(Mis à jour le 28 août 2026.)*
 
 Liens:
 

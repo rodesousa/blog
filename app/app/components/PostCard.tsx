@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import type { PostMeta } from "../lib/posts";
 import type { Locale } from "../lib/locale";
+import { imageDims } from "../lib/imageDims";
 
 interface PostCardProps {
   post: PostMeta;
@@ -22,6 +23,10 @@ export function PostCard({ post, locale }: PostCardProps) {
           <img
             src={imageSrc}
             alt={frontmatter.title}
+            width={imageDims(imageSrc)?.width}
+            height={imageDims(imageSrc)?.height}
+            loading="lazy"
+            decoding="async"
             className="w-full rounded-lg mb-4 object-cover max-h-64"
           />
         )}

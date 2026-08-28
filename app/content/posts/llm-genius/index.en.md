@@ -34,7 +34,7 @@ lightgallery: true
 
 <div style="display: flex; justify-content: center;">
 
-![](genius.png)
+![Malicious genie granting three wishes](genius.png)
 </div>
 
 
@@ -44,7 +44,7 @@ When I write a prompt, I always know I’m opening up a range of interpretations
 
 <div style="display: flex; justify-content: center;">
 
-![](entonnoir.png)
+![Inverted funnel: a prompt opens up a range of interpretations](entonnoir.png)
 </div>
 
 A good prompt looks like this:
@@ -90,7 +90,7 @@ I often use the "two funnels": the inverted one as input for another funnel.
 
 <div style="display: flex; justify-content: center;">
 
-![](reverse-entonnoir.png)
+![Reverse funnel: using the inverted funnel output as input](reverse-entonnoir.png)
 </div>
 
 Links:

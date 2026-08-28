@@ -12,6 +12,7 @@ import {
 import type { Route } from "./+types/root";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
+import { buildOrganizationJsonLd, buildPersonJsonLd } from "./lib/seo";
 import "./app.css";
 
 export async function loader({ request }: Route.LoaderArgs) {
@@ -25,6 +26,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 export const links: Route.LinksFunction = () => [
   { rel: "manifest", href: "/site.webmanifest" },
+  { rel: "alternate", type: "application/rss+xml", href: "/feed.xml", title: "rdesousa.fr" },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
@@ -48,6 +50,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildOrganizationJsonLd()) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildPersonJsonLd()) }}
+        />
       </head>
       <body className="min-h-screen flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
         <Header />

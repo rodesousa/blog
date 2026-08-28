@@ -1,0 +1,24 @@
+# rdesousa.fr
+
+> Blog de Roberto De Sousa — ingénierie logicielle, Elixir, management, IA.
+> Software engineering, Elixir, engineering management and LLM practice, in French (and some English).
+
+Roberto De Sousa is a French software engineer and CTO (10+ years) with a functional-programming
+background (Elixir), hands-on experience across dev/SRE/architecture up to lead/CTO, and strong
+opinions on Agile, engineering culture and LLM-assisted development. He co-founded Cohortes
+(AI analysis of employee testimonials for workplace wellbeing).
+
+## Posts (French)
+
+- [J'arrête Claude](https://rdesousa.fr/posts/jarrete-claude): arrêter Claude Code, le prix cognitif et la dépendance derrière la vélocité des modèles frontier, vers une IA locale.
+- [Part 2 - Retour sur 8 mois avec les LLM](https://rdesousa.fr/posts/llm-feedback-part-2): retour d'expérience sur Claude Code CLI, TDD, CLAUDE.md, archi.md, test driven spec.
+- [Part 1 - Retour sur 8 mois avec les LLM](https://rdesousa.fr/posts/llm-feedback-part-1): trois pratiques de dev avec les LLM — sans LLM, copilot, vibe coding.
+- [With, mon meilleur allié pour la lisibilité de code](https://rdesousa.fr/posts/with-elixir): le `with` d'Elixir pour gérer des suites de conditions lisibles.
+- [Le live coding est-il vraiment une méthode pertinente dans le processus de recrutement ?](https://rdesousa.fr/posts/recrutement): critique du live coding et alternatives (system design, présentation de projet, cooptation, hackathon).
+- [Rendre l'hallucination des LLM utile](https://rdesousa.fr/posts/llm-genius): le prompting comme entonnoir inversé, rendre l'hallucination exploitable.
+- [Comment les outils d'organisation du travail inscrivent la subordination des conditions de travail à la performance ?](https://rdesousa.fr/posts/bad_tools): analyse sociologique des outils de gestion (QVCT).
+
+## Other pages
+
+- [À propos](https://rdesousa.fr/about): CV, expérience et convictions de Roberto De Sousa.
+- [Feed RSS](https://rdesousa.fr/feed.xml): flux complet des articles.

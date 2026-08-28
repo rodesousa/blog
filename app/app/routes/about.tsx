@@ -1,5 +1,5 @@
 import { getAboutPage } from "../lib/posts";
-import { buildPageMeta, SITE_URL } from "../lib/seo";
+import { buildPageMeta, buildPersonJsonLd, SITE_URL } from "../lib/seo";
 import type { Route } from "./+types/about";
 
 export async function loader() {
@@ -20,12 +20,9 @@ export function meta({ data }: Route.MetaArgs): Route.MetaDescriptors {
     }),
     {
       "script:ld+json": {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        name: "Roberto De Sousa",
-        url: SITE_URL,
+        ...buildPersonJsonLd(),
         description: about.description,
-        sameAs: ["https://github.com/rodesousa"],
+        url: `${SITE_URL}/about`,
       },
     },
   ];

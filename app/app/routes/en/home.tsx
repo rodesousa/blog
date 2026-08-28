@@ -23,6 +23,9 @@ export default function EnHome({ loaderData }: Route.ComponentProps) {
 
   return (
     <div>
+      <h1 className="sr-only">
+        rdesousa.fr — Engineering & Management: articles by Roberto De Sousa
+      </h1>
       {posts.length === 0 ? (
         <p className="text-gray-500 dark:text-gray-500">No posts yet.</p>
       ) : (

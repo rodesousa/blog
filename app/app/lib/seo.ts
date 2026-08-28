@@ -1,6 +1,15 @@
+import { imageDims } from "./imageDims";
+
 export const SITE_URL = "https://rdesousa.fr";
 export const SITE_TITLE = "rdesousa.fr";
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/images/avatar.png`;
+export const AUTHOR_NAME = "Roberto De Sousa";
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/images/og-default.png`;
+export const DEFAULT_OG_WIDTH = 1200;
+export const DEFAULT_OG_HEIGHT = 630;
+
+// Stable entity anchors shared across every page (GEO entity clarity).
+export const PERSON_ID = `${SITE_URL}/#person`;
+export const ORG_ID = `${SITE_URL}/#org`;
 
 type Locale = "fr" | "en";
 type MetaEntry = Record<string, unknown>;
@@ -13,12 +22,77 @@ function altLocale(locale: Locale): Locale {
   return locale === "fr" ? "en" : "fr";
 }
 
+export function buildOrganizationJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": ORG_ID,
+    name: SITE_TITLE,
+    url: SITE_URL,
+    logo: {
+      "@type": "ImageObject",
+      url: `${SITE_URL}/images/avatar.png`,
+    },
+    founder: { "@id": PERSON_ID },
+    sameAs: ["https://github.com/rodesousa"],
+  };
+}
+
+export function buildPersonJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": PERSON_ID,
+    name: AUTHOR_NAME,
+    url: `${SITE_URL}/about`,
+    jobTitle: "Software engineer & CTO",
+    knowsAbout: ["Elixir", "Software engineering", "Engineering management", "LLM"],
+    sameAs: ["https://github.com/rodesousa"],
+  };
+}
+
+export function buildBreadcrumbJsonLd(crumbPath: string, crumbName: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Blog",
+        item: `${SITE_URL}/posts`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: crumbName,
+        item: `${SITE_URL}${crumbPath}`,
+      },
+    ],
+  };
+}
+
+function ogImageEntry(
+  ogImage: string,
+  width?: number,
+  height?: number
+): MetaEntry[] {
+  return [
+    { property: "og:image", content: ogImage },
+    { property: "og:image:width", content: String(width ?? DEFAULT_OG_WIDTH) },
+    { property: "og:image:height", content: String(height ?? DEFAULT_OG_HEIGHT) },
+    { name: "twitter:image", content: ogImage },
+  ];
+}
+
 export function buildPageMeta({
   title,
   description,
   path,
   locale,
   ogImage = DEFAULT_OG_IMAGE,
+  ogImageWidth,
+  ogImageHeight,
   alternatePath,
 }: {
   title: string;
@@ -26,6 +100,8 @@ export function buildPageMeta({
   path: string;
   locale: Locale;
   ogImage?: string;
+  ogImageWidth?: number;
+  ogImageHeight?: number;
   alternatePath?: string;
 }): MetaEntry[] {
   const canonicalUrl = `${SITE_URL}${path}`;
@@ -43,7 +119,7 @@ export function buildPageMeta({
     { property: "og:type", content: "website" },
     { property: "og:title", content: title },
     { property: "og:description", content: description },
-    { property: "og:image", content: ogImage },
+    ...ogImageEntry(ogImage, ogImageWidth, ogImageHeight),
     { property: "og:url", content: canonicalUrl },
     { property: "og:site_name", content: SITE_TITLE },
     { property: "og:locale", content: ogLocale(locale) },
@@ -51,7 +127,6 @@ export function buildPageMeta({
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: title },
     { name: "twitter:description", content: description },
-    { name: "twitter:image", content: ogImage },
     { tagName: "link", rel: "canonical", href: canonicalUrl },
     { tagName: "link", rel: "alternate", hrefLang: locale, href: canonicalUrl },
     { tagName: "link", rel: "alternate", hrefLang: alt, href: altUrl },
@@ -74,6 +149,7 @@ export function buildPostMeta({
   modifiedTime,
   tags = [],
   hasAlternate = false,
+  breadcrumbName,
 }: {
   title: string;
   description: string;
@@ -84,10 +160,17 @@ export function buildPostMeta({
   modifiedTime?: string;
   tags?: string[];
   hasAlternate?: boolean;
+  breadcrumbName?: string;
 }): MetaEntry[] {
   const postPath = locale === "fr" ? `/posts/${slug}` : `/en/posts/${slug}`;
   const canonicalUrl = `${SITE_URL}${postPath}`;
   const alt = altLocale(locale);
+
+  // Resolve OG image dimensions when we know them (featured images), else default.
+  const imgPath = ogImage.replace(SITE_URL, "");
+  const dims = imageDims(imgPath);
+  const ogW = dims?.width ?? DEFAULT_OG_WIDTH;
+  const ogH = dims?.height ?? DEFAULT_OG_HEIGHT;
 
   const meta: MetaEntry[] = [
     { title },
@@ -95,14 +178,13 @@ export function buildPostMeta({
     { property: "og:type", content: "article" },
     { property: "og:title", content: title },
     { property: "og:description", content: description },
-    { property: "og:image", content: ogImage },
+    ...ogImageEntry(ogImage, ogW, ogH),
     { property: "og:url", content: canonicalUrl },
     { property: "og:site_name", content: SITE_TITLE },
     { property: "og:locale", content: ogLocale(locale) },
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: title },
     { name: "twitter:description", content: description },
-    { name: "twitter:image", content: ogImage },
     { tagName: "link", rel: "canonical", href: canonicalUrl },
     { tagName: "link", rel: "alternate", hrefLang: locale, href: canonicalUrl },
   ];
@@ -131,31 +213,54 @@ export function buildPostMeta({
     });
   }
 
-  // JSON-LD Article structured data
+  // JSON-LD BlogPosting structured data (GEO entity + citation target)
   const jsonLd: Record<string, unknown> = {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
+    "@id": `${canonicalUrl}#article`,
     headline: title,
     description,
     url: canonicalUrl,
-    image: ogImage,
+    image: {
+      "@type": "ImageObject",
+      url: ogImage,
+      width: ogW,
+      height: ogH,
+    },
     author: {
       "@type": "Person",
-      name: "Roberto De Sousa",
-      url: SITE_URL,
+      "@id": PERSON_ID,
+      name: AUTHOR_NAME,
+      url: `${SITE_URL}/about`,
     },
     publisher: {
-      "@type": "Person",
-      name: "Roberto De Sousa",
-      url: SITE_URL,
+      "@type": "Organization",
+      "@id": ORG_ID,
+      name: SITE_TITLE,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/images/avatar.png`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": canonicalUrl,
     },
     inLanguage: locale,
+    isAccessibleForFree: true,
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: [".lead", "h2"],
+    },
   };
   if (publishedTime) jsonLd.datePublished = publishedTime;
   if (modifiedTime) jsonLd.dateModified = modifiedTime;
   if (tags && tags.length > 0) jsonLd.keywords = tags.join(", ");
 
   meta.push({ "script:ld+json": jsonLd });
+  meta.push({
+    "script:ld+json": buildBreadcrumbJsonLd(postPath, breadcrumbName ?? title),
+  });
 
   return meta;
 }

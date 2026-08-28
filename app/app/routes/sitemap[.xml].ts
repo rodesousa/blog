@@ -16,8 +16,25 @@ export async function loader() {
   const staticUrls: SitemapUrl[] = [
     { loc: SITE_URL, lastmod: new Date().toISOString().split("T")[0], priority: "1.0", changefreq: "weekly" },
     { loc: `${SITE_URL}/en`, lastmod: new Date().toISOString().split("T")[0], priority: "0.9", changefreq: "weekly" },
-    { loc: `${SITE_URL}/about`, priority: "0.8", changefreq: "monthly" },
-    { loc: `${SITE_URL}/en/about`, priority: "0.7", changefreq: "monthly" },
+    {
+      loc: `${SITE_URL}/about`,
+      priority: "0.8",
+      changefreq: "monthly",
+      alternates: [
+        { hreflang: "fr", href: `${SITE_URL}/about` },
+        { hreflang: "en", href: `${SITE_URL}/en/about` },
+      ],
+    },
+    {
+      loc: `${SITE_URL}/en/about`,
+      priority: "0.7",
+      changefreq: "monthly",
+      alternates: [
+        { hreflang: "en", href: `${SITE_URL}/en/about` },
+        { hreflang: "fr", href: `${SITE_URL}/about` },
+      ],
+    },
+    { loc: `${SITE_URL}/feed.xml`, priority: "0.3", changefreq: "daily" },
   ];
 
   const postUrls: SitemapUrl[] = frPosts.map((post) => {

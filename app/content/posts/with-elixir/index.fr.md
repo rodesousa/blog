@@ -2,7 +2,7 @@
 weight: 1
 title: "With, mon meilleur allié pour la lisibilité de code"
 date: 2025-08-08T10:34:40+08:00
-lastmod: 2025-08-08T10:34:40+08:00
+lastmod: 2026-08-28T09:00:00+02:00
 draft: false
 author: "Roberto"
 description: "Mieux gérer les conditions à rallonge avec 'with' d'elixir"
@@ -74,5 +74,7 @@ defp user_can_be_added_to_organization?(socket, user, org_id) do
   end
 end
 ```
+
+*(Mis à jour le 28 août 2026 : c'est toujours le pattern que j'utilise pour garder du code lisible — et il s'avère encore plus précieux avec le code généré par les agents LLM, qui ont tendance à empiler les conditions imbriquées.)*
 
 

@@ -2,7 +2,7 @@
 weight: 1
 title: "Le live coding est-il vraiment une méthode pertinente dans le processus de recrutement ?"
 date: 2025-07-27T15:34:40+08:00
-lastmod: 2025-07-27T15:34:40+08:00
+lastmod: 2026-08-28T09:00:00+02:00
 draft: false
 author: "Roberto"
 description: "Le live coding est-il vraiment une méthode pertinente, ou est-il le symptôme d'un recrutement dénué de stratégie ?"
@@ -33,7 +33,7 @@ Le live coding est la manière pour beaucoup d'entreprise de mesurer les compét
 
 </div>
 
-## Mon dernier live coding
+## Comment s'est passé mon dernier live coding ?
 
 Début 2025, un call avec un CTO plutôt agréable, on convient d'une date d'un test technique en présentiel. Je suis reçu par le CTO, café, 5 min plus tard, on me donne un TD à faire (que j'avais trouvé sur github avant). On m'installe devant un écran, dans un open space, avec d'autres devs à côté. J'ai 1h pour le faire, je suis un peu malade, mais ça va le faire. 1h après, on relève ma copie. Je présente mon code devant 2 devs + le CTO. Avant de présenter mon code, j'apprends que ce test est le premier de l'après midi, et après, il y a un test SQL, l'impression de passer une colle de physique. Je suis un peu agacé, mais bon, il n'y a pas mille boites qui font de l'elixir en France.
 
@@ -46,7 +46,7 @@ On commence à discuter des Genserver, des processus erlang et savoir pourquoi j
 
 2 min plus tard, je suis dehors.
 
-## Les travers du live coding
+## Quels sont les travers du live coding ?
 
 Le live coding ne reflète pas les conditions réelles des développeurs ni les conditions de développement. Quand j'écris du code, je fais des *trade off*, de la conception, cherche de l'information et discute avec mes collègues. Ça n'existe pas de me retrouver contraint à ne faire aucune de ces choses-là.
 
@@ -60,7 +60,7 @@ Le live coding c'est comme un piff : il ne repose sur aucune stratégie claire e
 
 Après cette interview, je me suis vu comme un footballeur qui a raté sa présentation devant les supporters : [Top worst presentation ever in football](https://www.youtube.com/shorts/dUk_qb7dYj8?time_continue=69&embeds_referring_euri=https%3A%2F%2Fwww.google.com%2F&source_ve_path=MjM4NTE)
 
-## Des processus plus intéressant
+## Quels sont les processus de recrutement plus intéressants que le live coding ?
 
 ### System design
 
@@ -143,3 +143,5 @@ Saša Jurić dans une suite d'article dans [Towards Maintainable Elixir](https:/
 Ce qui structure une équipe, ce sont les méthodes de travail. Publier ce processus permet de partager une culture, d'ouvrir les critères de sélection en dehors des *soft/hard skills*.
 
 **Voici comment on bosse. Si ça t’inspire, rentre.**
+
+*(Mis à jour le 28 août 2026 : avec des assistants IA omniprésents dans les IDE, évaluer la connaissance d'une fonction précise a encore moins de sens — mon opinion sur le live coding n'a pas changé.)*

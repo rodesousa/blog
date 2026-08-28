@@ -2,10 +2,10 @@
 weight: 1
 title: "Part 2- Retour sur 8 mois avec les LLM"
 date: 2025-08-29T15:34:40+08:00
-lastmod: 2025-08-29T15:34:40+08:00
+lastmod: 2026-08-28T09:00:00+02:00
 draft: false
 author: "Roberto"
-description: "Part 2- Retour sur 8 mois avec les LLM"
+description: "Claude Code CLI en pratique : TDD, CLAUDE.md, archi.md et agents de maintenance d'architecture — un retour d'expérience après plusieurs semaines de vibe coding."
 images: []
 resources: 
 - name: "featured-image"
@@ -18,11 +18,13 @@ lightgallery: true
 
 À l'annonce de [cursor cli](https://cursor.com/cli), j'ai voulu le tester. J'ai eu quelques problèmes... je me suis redirigé vers [claude code](https://www.anthropic.com/claude-code)... après tout le monde. Après quelques heures, j'ai compris que la CLI est la parfaite utilisation pour mes *workflows* de code. J'ai pris le forfait à 100 balles (aïe), et après quelques semaines de *vibe coding* avec Claude Code CLI, voici mon feedback :
 
+Un an plus tard (mise à jour du 28 août 2026), mon workflow est resté le même : TDD d'abord, CLAUDE.md pour les règles, archi.md pour l'architecture — et j'ai étendu ces pratiques à d'autres agents CLI (Cursor, entre autres).
+
 <div style="display: flex; justify-content: center;">
   <img src="vibe1.png" alt="vibe1">
 </div>
 
-## Test Driven Development
+## Comment je pratique le TDD avec Claude Code ?
 
 Comme d'habitude, à chaque prompt de code, je demande toujours de commencer par des tests. C'est sa *definition of done*. Pas d'ambiguïté, Claude Code doit faire passer les tests de **fail** à **success**. 
 
@@ -36,7 +38,7 @@ J'active le [mode plan](https://medium.com/@kuntal-c/claude-code-plan-mode-revol
 
 Parfois j'oublie, donc pour résoudre ça, j'utilise CLAUDE.md.
 
-## CLAUDE.MD est mon.a meilleur·e pote
+## Pourquoi CLAUDE.md est-il mon meilleur allié ?
 
 [CLAUDE.md](https://docs.anthropic.com/en/docs/claude-code/memory) est un fichier chargé à chaque fois que tu lances une session de Claude. J'utilise pour l'instant seulement le *Project memory, ./CLAUDE.md* et je stocke **uniquement** des workflows et des règles dedans :
 
@@ -69,7 +71,7 @@ When I describe a bug:
 
 Le but est d'aider Claude à atteindre ce que j'aurais fait. Je le vois comme si je jouais aux fléchettes. Si je lui donne juste un prompt, parfois ça tombe où je veux, parfois non. Par contre, avec des règles et des workflows, j'améliore mes probabilités.
 
-## archi.md
+## Comment archi.md documente-t-il mon architecture ?
 
 Plus j'ai de fichiers, plus je trouve que Claude Code s'emmêle les pinceaux. Par exemple, j'ai un module de composants Tailwind, qu'il a lui-même créé, mais quand je lui demande de faire une nouvelle page, il ne va pas chercher dans ces composants.
 
@@ -79,7 +81,7 @@ Donc dans mon archi.md, je détaille (markdown, mermaid) le rôle de chaque fich
 
 ## Test Driven Spec
 
-Allez, moi aussi j'invente des expressions, *Test Driven Spec* ! J'avais proposé dans [la partie 1](/llm-feedback-part-1) de réécrire le fichier PRD.md à chaque changement majeur, donc pareil pour mon archi.md. Mais je ne suis plus totalement d'accord avec le Robby du passé. 
+Allez, moi aussi j'invente des expressions, *Test Driven Spec* ! J'avais proposé dans [la partie 1](/posts/llm-feedback-part-1) de réécrire le fichier PRD.md à chaque changement majeur, donc pareil pour mon archi.md. Mais je ne suis plus totalement d'accord avec le Robby du passé. 
 
 J'ai remarqué que comme j'adore les tests (ah bon), la vraie archi de mon projet se situe entre archi.md et les tests. Très bien, j'ai écrit un agent Claude pour compléter mon fichier archi.md depuis les nouveaux tests.
 

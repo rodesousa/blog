@@ -10,5 +10,6 @@ export default [
   route("about", "routes/about.tsx"),
   route("en/about", "routes/en/about.tsx"),
   route("sitemap.xml", "routes/sitemap[.xml].ts"),
+  route("feed.xml", "routes/feed[.xml].ts"),
   route("robots.txt", "routes/robots[.txt].ts"),
 ] satisfies RouteConfig;
