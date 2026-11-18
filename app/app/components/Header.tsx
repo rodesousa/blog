@@ -7,7 +7,6 @@ export function Header() {
   const alternateUrl = getAlternateUrl(location.pathname);
 
   const homeUrl = locale === "en" ? "/en" : "/";
-  const postsUrl = locale === "en" ? "/en/posts" : "/posts";
   const aboutUrl = locale === "en" ? "/en/about" : "/about";
   const alternateFlag = locale === "en" ? "🇫🇷" : "🇬🇧";
 
@@ -22,12 +21,6 @@ export function Header() {
         </Link>
 
         <nav className="flex items-center gap-6 text-sm">
-          <Link
-            to={postsUrl}
-            className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
-          >
-            {locale === "en" ? "Posts" : "Articles"}
-          </Link>
           <Link
             to={aboutUrl}
             className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"

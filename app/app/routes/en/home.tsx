@@ -29,9 +29,11 @@ export default function EnHome({ loaderData }: Route.ComponentProps) {
       {posts.length === 0 ? (
         <p className="text-gray-500 dark:text-gray-500">No posts yet.</p>
       ) : (
-        posts.map((post) => (
-          <PostCard key={post.slug} post={post} locale="en" />
-        ))
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post) => (
+            <PostCard key={post.slug} post={post} locale="en" />
+          ))}
+        </div>
       )}
     </div>
   );

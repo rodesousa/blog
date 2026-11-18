@@ -17,10 +17,13 @@ import "./app.css";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const url = new URL(request.url);
-  if (url.pathname !== "/" && url.pathname.endsWith("/")) {
-    return redirect(url.pathname.slice(0, -1) + url.search, 301);
+  const path = url.pathname;
+
+  if (path !== "/" && path.endsWith("/")) {
+    return redirect(path.slice(0, -1) + url.search, 301);
   }
-  const lang = url.pathname.startsWith("/en") ? "en" : "fr";
+
+  const lang = path.startsWith("/en") ? "en" : "fr";
   return { lang };
 }
 

@@ -10,10 +10,8 @@ export default {
 
     return [
       "/",
-      "/posts",
       "/about",
       "/en",
-      "/en/posts",
       "/en/about",
       ...fr,
       ...en,

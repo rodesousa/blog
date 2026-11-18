@@ -19,7 +19,7 @@ export function PostLayout({ post, locale }: PostLayoutProps) {
   const dateLocale = locale === "en" ? "en-US" : "fr-FR";
   const minutes = readingTime(contentHtml);
 
-  const postsUrl = locale === "en" ? "/en/posts" : "/posts";
+  const homeUrl = locale === "en" ? "/en" : "/";
   const aboutUrl = locale === "en" ? "/en/about" : "/about";
 
   const isUpdated =
@@ -32,8 +32,8 @@ export function PostLayout({ post, locale }: PostLayoutProps) {
       <nav aria-label="breadcrumb" className="mb-4 text-sm text-gray-500 dark:text-gray-500">
         <ol className="flex flex-wrap items-center gap-1.5">
           <li>
-            <Link to={postsUrl} className="hover:underline">
-              {locale === "en" ? "Blog" : "Blog"}
+            <Link to={homeUrl} className="hover:underline">
+              Blog
             </Link>
           </li>
           <li aria-hidden="true">/</li>
